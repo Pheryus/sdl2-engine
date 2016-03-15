@@ -4,6 +4,7 @@
 #include "Stringify.h"
 
 #include <sys/param.h>
+#include <unistd.h>
 #include <dirent.h>
 #include <stdio.h>
 
