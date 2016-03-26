@@ -13,6 +13,7 @@
 #include <SDL2/SDL.h>
 
 #include "TextureBank.h"
+#include "GameObject.h"
 
 class App {
 	private:
@@ -25,9 +26,10 @@ class App {
 		SDL_Surface* PrimarySurface = NULL;
 
 		static const int WindowWidth = 1024;
-		static const int WindowHeight = 768;
+		static const int WindowHeight = 600;
 
-		Texture* TestTexture;
+		// GameObjects
+		GameObject* mario = NULL;
 
 	private:
 		App();

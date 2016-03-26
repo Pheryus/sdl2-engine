@@ -1,6 +1,7 @@
 //==============================================================================
 #include "Texture.h"
 #include "Log.h"
+#include <cstring>
 
 //==============================================================================
 Texture::Texture() {
@@ -11,6 +12,10 @@ Texture::~Texture() {
 	if(SDLTexture) {
 		SDL_DestroyTexture(SDLTexture);
 		SDLTexture = NULL;
+	}
+	if(MaskTexture){
+		SDL_DestroyTexture(MaskTexture);
+		MaskTexture = NULL;
 	}
 }
 
@@ -31,14 +36,33 @@ bool Texture::Load(SDL_Renderer* Renderer, std::string Filename) {
 	}
 
     // Convert SDL surface to a texture
-	if((SDLTexture = SDL_CreateTextureFromSurface(Renderer, TempSurface)) == NULL) {
+	SDLTexture = SDL_CreateTextureFromSurface(Renderer, TempSurface);
+	if(SDLTexture == NULL) {
 		Log("Unable to create SDL Texture : %s : %s", Filename.c_str(), IMG_GetError());
 		return false;
 	}
 
-    // Grab dimensions
-	SDL_QueryTexture(SDLTexture, NULL, NULL, &Width, &Height);
+	// Created to give STREAMING access to texture. This is needed to access
+	// pixels to determine its masks
+	MaskTexture = SDL_CreateTexture(Renderer, SDL_PIXELFORMAT_ABGR8888,
+		SDL_TEXTUREACCESS_STREAMING, TempSurface->w, TempSurface->h);
+	if(MaskTexture == NULL) {
+		Log("Unable to create SDL Texture : %s : %s", Filename.c_str(), IMG_GetError());
+		return false;
+	}
 
+	void* pixels;
+	SDL_SetTextureBlendMode(MaskTexture, SDL_BLENDMODE_BLEND);
+    SDL_LockTexture(MaskTexture, &TempSurface->clip_rect, &pixels, &TempSurface->pitch);
+    memcpy(pixels, TempSurface->pixels, (TempSurface->w * TempSurface->h)<<2);
+	SDL_UnlockTexture(MaskTexture);
+
+    // Grab dimensions and pitch
+	Width = TempSurface->w;
+	Height = TempSurface->h;
+	pitch = TempSurface->pitch;
+
+	//SDL_QueryTexture(SDLTexture, NULL, NULL, &Width, &Height);
 	//Log("Texture Dimensions: %s : %d %d", Filename.c_str(), Width, Height);
 
 	SDL_FreeSurface(TempSurface);
@@ -69,5 +93,5 @@ void Texture::Render(int X, int Y, int Width, int Height, int SX, int SY, int SW
 //------------------------------------------------------------------------------
 int Texture::GetWidth()  { return Width;  }
 int Texture::GetHeight() { return Height; }
-
+int Texture::GetPitch()  { return pitch;  }
 //==============================================================================

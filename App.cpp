@@ -14,13 +14,14 @@ void App::OnEvent(SDL_Event* Event) {
 
 //------------------------------------------------------------------------------
 bool App::Init() {
+	Log("[ .. ] Initializing sdl2-engine...")
 	if(SDL_Init(SDL_INIT_VIDEO) < 0) {
-		Log("Unable to Init SDL: %s", SDL_GetError());
+		Log("[ERRO] Unable to Init SDL: %s", SDL_GetError());
 		return false;
 	}
 
 	if(!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1")) {
-		Log("Unable to Init hinting: %s", SDL_GetError());
+		Log("[ERRO] Unable to Init hinting: %s", SDL_GetError());
 	}
 
 	if((Window = SDL_CreateWindow(
@@ -28,30 +29,33 @@ bool App::Init() {
 		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 		WindowWidth, WindowHeight, SDL_WINDOW_SHOWN)
 	) == NULL) {
-		Log("Unable to create SDL Window: %s", SDL_GetError());
+		Log("[ERRO] Unable to create SDL Window: %s", SDL_GetError());
 		return false;
 	}
 
 	PrimarySurface = SDL_GetWindowSurface(Window);
 
 	if((Renderer = SDL_CreateRenderer(Window, -1, SDL_RENDERER_ACCELERATED)) == NULL) {
-	    Log("Unable to create renderer");
+	    Log("[ERRO] Unable to create renderer");
 	    return false;
 	}
 
-	SDL_SetRenderDrawColor(Renderer, 0x00, 0x00, 0x00, 0xFF);
+	SDL_SetRenderDrawColor(Renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
 	// Initialize image loading for PNGs
 	if(!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
-		Log("Unable to init SDL_image: %s", IMG_GetError());
+		Log("[ERRO] Unable to init SDL_image: %s", IMG_GetError());
 		return false;
 	}
 
 	// Load all of our Textures (see TextureBank class for expected folder)
 	if(TextureBank::Init() == false) {
-		Log("Unable to init TextureBank");
+		Log("[ERRO] Unable to init TextureBank");
 		return false;
 	}
+	Log("[ OK ] sdl2-engine initialized.");
+
+	mario = new GameObject("Test");
 
 	return true;
 }
@@ -64,7 +68,8 @@ void App::Loop() {
 void App::Render() {
 	SDL_RenderClear(Renderer);
 
-	TextureBank::Get("Test")->Render(0, 0); // You should really check your pointers
+	//TextureBank::Get("Test")->Render(0, 0); // You should really check your pointers
+	mario->Render();
 
 	SDL_RenderPresent(Renderer);
 }
@@ -83,8 +88,14 @@ void App::Cleanup() {
 		Window = NULL;
 	}
 
+	if (mario){
+		delete mario;
+		mario = NULL;
+	}
+
 	IMG_Quit();
 	SDL_Quit();
+	Log("[ OK ] App cleaned");
 }
 
 //------------------------------------------------------------------------------

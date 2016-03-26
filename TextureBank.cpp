@@ -52,7 +52,7 @@ void TextureBank::AddTexture(SDL_Renderer* Renderer, std::string ID, std::string
 
     Texture* NewTexture = new Texture();
     if(NewTexture->Load(Renderer, Filename) == false) {
-		Log("Unable to Load Texture: %s", ID.c_str());
+		Log("[ERRO] Unable to Load Texture: %s", ID.c_str());
 		return;
 	}
 

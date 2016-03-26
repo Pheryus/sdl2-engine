@@ -90,7 +90,7 @@ std::vector<std::string> FileManager::GetFilesInFolder(std::string Folder) {
 
             closedir(DirHandle);
         }else{
-            Log("Unable to open directory : %s", Path.c_str());
+            Log("[ERRO] Unable to open directory : %s", Path.c_str());
         }
 	#endif
 

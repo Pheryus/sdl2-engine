@@ -21,9 +21,11 @@ class Texture {
 
 		int Width = 0;
 		int Height = 0;
+		int pitch = 0;
 
 		SDL_Renderer* Renderer = NULL;
 		SDL_Texture* SDLTexture = NULL;
+		SDL_Texture* MaskTexture = NULL;
 
 	public:
 		Texture();
@@ -39,6 +41,10 @@ class Texture {
 
 		int GetWidth();
 		int GetHeight();
+		int GetPitch(); //To use with mask
+
+		SDL_Texture* GetMaskTexture(){ return MaskTexture; };
+		void DestroyMaskTexture(){ SDL_DestroyTexture(MaskTexture); };
 };
 
 #endif
