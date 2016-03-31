@@ -8,7 +8,15 @@
 */
 //==============================================================================
 #include "App.h"
-
+#include <vector>
+#include "GameObject.h"
 int main(int argc, char* argv[]) {
-	return App::GetInstance()->Execute(argc, argv);
+	if (App::GetInstance()->Init()){
+		GameObject* vinnie = new GameObject("Test");
+		std::vector<GameObject*> gebinha;
+		gebinha.push_back(new GameObject("Test"));
+		delete gebinha[0];
+		gebinha.clear();
+		return App::GetInstance()->Execute(argc, argv);
+	}
 }

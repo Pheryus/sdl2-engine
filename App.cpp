@@ -22,6 +22,7 @@ bool App::Init() {
 
 	if(!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1")) {
 		Log("[ERRO] Unable to Init hinting: %s", SDL_GetError());
+		return false;
 	}
 
 	if((Window = SDL_CreateWindow(
@@ -56,6 +57,7 @@ bool App::Init() {
 	Log("[ OK ] sdl2-engine initialized.");
 
 	mario = new GameObject("Test");
+	mario->SetPos((WindowWidth>>1)-140,(WindowHeight>>1)-160);
 
 	return true;
 }
@@ -100,7 +102,8 @@ void App::Cleanup() {
 
 //------------------------------------------------------------------------------
 int App::Execute(int argc, char* argv[]) {
-	if(!Init()) return 0;
+	//if(!Initialized) return 0;
+	//if(!Init()) return 0;
 
 	SDL_Event Event;
 

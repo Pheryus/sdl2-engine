@@ -3,6 +3,8 @@
 Mask::Mask(SDL_Texture* t, SDL_Rect rect, int pitch){
 	Width = rect.w;
 	Height = rect.h;
+	x_offset = rect.x;
+	y_offset = rect.y;
 	bitmask = bitmask_create(Width, Height);
 	if (!bitmask){
 		Log("[ERRO] Unable to create bitmask");

@@ -37,9 +37,6 @@ class App {
 		// Capture SDL Events
 		void OnEvent(SDL_Event* Event);
 
-		// Initialize our SDL game / app
-		bool Init();
-
 		// Logic loop
 		void Loop();
 
@@ -53,6 +50,8 @@ class App {
 		int Execute(int argc, char* argv[]);
 
 	public:
+		// Initialize our SDL game / app
+		bool Init();
 		SDL_Renderer* GetRenderer();
 
 	public:

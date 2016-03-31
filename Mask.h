@@ -10,6 +10,8 @@ class Mask {
 		bitmask_t* bitmask = NULL;
 		int Width;
 		int Height;
+		int x_offset;
+		int y_offset;
 		bool SetBitmask(SDL_Texture*, SDL_Rect, int);
 
 	public:

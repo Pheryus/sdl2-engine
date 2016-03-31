@@ -13,10 +13,6 @@ Texture::~Texture() {
 		SDL_DestroyTexture(SDLTexture);
 		SDLTexture = NULL;
 	}
-	if(MaskTexture){
-		SDL_DestroyTexture(MaskTexture);
-		MaskTexture = NULL;
-	}
 }
 
 //==============================================================================
@@ -36,27 +32,26 @@ bool Texture::Load(SDL_Renderer* Renderer, std::string Filename) {
 	}
 
     // Convert SDL surface to a texture
-	SDLTexture = SDL_CreateTextureFromSurface(Renderer, TempSurface);
+	/*SDLTexture = SDL_CreateTextureFromSurface(Renderer, TempSurface);
+	if(SDLTexture == NULL) {
+		Log("Unable to create SDL Texture : %s : %s", Filename.c_str(), IMG_GetError());
+		return false;
+	}*/
+
+	// Created to give STREAMING access to texture. This is needed to access
+	// pixels to determine its masks
+	SDLTexture = SDL_CreateTexture(Renderer, SDL_PIXELFORMAT_ABGR8888,
+		SDL_TEXTUREACCESS_STREAMING, TempSurface->w, TempSurface->h);
 	if(SDLTexture == NULL) {
 		Log("Unable to create SDL Texture : %s : %s", Filename.c_str(), IMG_GetError());
 		return false;
 	}
 
-	// Created to give STREAMING access to texture. This is needed to access
-	// pixels to determine its masks
-	MaskTexture = SDL_CreateTexture(Renderer, SDL_PIXELFORMAT_ABGR8888,
-		SDL_TEXTUREACCESS_STREAMING, TempSurface->w, TempSurface->h);
-	if(MaskTexture == NULL) {
-		Log("Unable to create SDL Texture : %s : %s", Filename.c_str(), IMG_GetError());
-		return false;
-	}
-
 	void* pixels;
-	SDL_SetTextureBlendMode(MaskTexture, SDL_BLENDMODE_BLEND);
-    SDL_LockTexture(MaskTexture, &TempSurface->clip_rect, &pixels, &TempSurface->pitch);
+	SDL_SetTextureBlendMode(SDLTexture, SDL_BLENDMODE_BLEND);
+    SDL_LockTexture(SDLTexture, &TempSurface->clip_rect, &pixels, &TempSurface->pitch);
     memcpy(pixels, TempSurface->pixels, (TempSurface->w * TempSurface->h)<<2);
-	SDL_UnlockTexture(MaskTexture);
-
+	SDL_UnlockTexture(SDLTexture);
     // Grab dimensions and pitch
 	Width = TempSurface->w;
 	Height = TempSurface->h;
@@ -66,7 +61,6 @@ bool Texture::Load(SDL_Renderer* Renderer, std::string Filename) {
 	//Log("Texture Dimensions: %s : %d %d", Filename.c_str(), Width, Height);
 
 	SDL_FreeSurface(TempSurface);
-
 	return true;
 }
 
