@@ -47,7 +47,8 @@ class App {
 		void Cleanup();
 
 	public:
-		int Execute(int argc, char* argv[]);
+		int Execute();
+		int Execute(bool*);
 
 	public:
 		// Initialize our SDL game / app

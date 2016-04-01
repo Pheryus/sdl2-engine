@@ -84,53 +84,42 @@ void App::Cleanup() {
 		SDL_DestroyRenderer(Renderer);
 		Renderer = NULL;
 	}
-
 	if(Window) {
 		SDL_DestroyWindow(Window);
 		Window = NULL;
 	}
-
 	if (mario){
 		delete mario;
 		mario = NULL;
 	}
-
 	IMG_Quit();
 	SDL_Quit();
 	Log("[ OK ] App cleaned");
 }
 
 //------------------------------------------------------------------------------
-int App::Execute(int argc, char* argv[]) {
-	//if(!Initialized) return 0;
-	//if(!Init()) return 0;
+int App::Execute(){ return Execute(&Running); }
 
+int App::Execute(bool *conditional) {
 	SDL_Event Event;
 
-	while(Running) {
+	while(*conditional) {
 		while(SDL_PollEvent(&Event) != 0) {
 			OnEvent(&Event);
-
 			if(Event.type == SDL_QUIT) Running = false;
 		}
-
 		Loop();
 		Render();
-
-		SDL_Delay(1); // Breath
+		SDL_Delay(17); // Breath
 	}
-
 	Cleanup();
-
 	return 1;
 }
 
 //==============================================================================
+
 SDL_Renderer* App::GetRenderer() { return Renderer; }
-
-//==============================================================================
 App* App::GetInstance() { return &App::Instance; }
-
 int App::GetWindowWidth()  { return WindowWidth; }
 int App::GetWindowHeight() { return WindowHeight; }
 

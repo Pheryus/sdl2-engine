@@ -17,6 +17,6 @@ int main(int argc, char* argv[]) {
 		gebinha.push_back(new GameObject("Test"));
 		delete gebinha[0];
 		gebinha.clear();
-		return App::GetInstance()->Execute(argc, argv);
+		return App::GetInstance()->Execute();
 	}
 }
