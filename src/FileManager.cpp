@@ -12,7 +12,7 @@
 bool FileManager::SetContents(std::string Filename, std::string Content, bool Relative) {
 	if(Filename == "") return false;
 
-	if(Relative) Filename = GetCWD() + DIR_SEPARATOR + Filename;
+	if(Relative) Filename = GetCWD() + DIR_SEPARATOR  + Filename;
 
 	std::ofstream FileHandle;
 
@@ -29,7 +29,7 @@ bool FileManager::SetContents(std::string Filename, std::string Content, bool Re
 std::string FileManager::GetContents(std::string Filename, bool Relative) {
 	if(Filename == "") return "";
 
-	if(Relative) Filename = GetCWD() + DIR_SEPARATOR + Filename;
+	if(Relative) Filename = GetCWD() + DIR_SEPARATOR  + Filename;
 
 	std::string Content;
 	std::ifstream FileHandle;
@@ -58,7 +58,7 @@ std::vector<std::string> FileManager::GetFilesInFolder(std::string Folder) {
 	std::string CWD  = GetCWD();
 	std::string Path = CWD;
 
-	if(Folder != "") Path += DIR_SEPARATOR + Folder;
+	if(Folder != "") Path += DIR_SEPARATOR  + Folder;
 
 	#ifdef __APPLE__
 		NSError* Error;
@@ -67,7 +67,7 @@ std::vector<std::string> FileManager::GetFilesInFolder(std::string Folder) {
 		NSArray* DirectoryContents	= [[NSFileManager defaultManager] contentsOfDirectoryAtPath:PathNS error:&Error];
 
 		for(id File in DirectoryContents) {
-			std::string Filename = Path + DIR_SEPARATOR + [File cStringUsingEncoding:1];
+			std::string Filename = Path + DIR_SEPARATOR  + [File cStringUsingEncoding:1];
 
 			List.push_back(Filename);
 		}
@@ -81,7 +81,7 @@ std::vector<std::string> FileManager::GetFilesInFolder(std::string Folder) {
                 if(std::string(FileHandle->d_name) == ".")  continue;
                 if(std::string(FileHandle->d_name) == "..") continue;
 
-                std::string Filename = Path + DIR_SEPARATOR + FileHandle->d_name;
+                std::string Filename = Path + DIR_SEPARATOR  + FileHandle->d_name;
 
                 //Log("Found File: %s", Filename.c_str());
 

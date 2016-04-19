@@ -1,6 +1,6 @@
 //=============================================================================
 #include "TextureBank.h"
-#include "App.h"
+#include "System.h"
 #include "FileManager.h"
 #include "Log.h"
 #include "Stringify.h"
@@ -13,7 +13,7 @@ std::map<std::string, std::vector<Mask*>*> TextureBank::MasksList;
 //=============================================================================
 bool TextureBank::Init() {
 	Cleanup();
-	return LoadFolder("Textures");
+	return LoadFolder("etc/Textures");
 }
 
 //-----------------------------------------------------------------------------
@@ -102,7 +102,7 @@ Texture* TextureBank::Get(std::string ID) {
 //=============================================================================
 void TextureBank::AddRects(std::string ID){
 	std::vector<SDL_Rect> *NewRects = new std::vector<SDL_Rect>();
-	std::string raw = FileManager::GetContents("Masks/"+ID);
+	std::string raw = FileManager::GetContents("etc/Masks/"+ID);
 	if (raw != ""){
 		std::vector<std::string> rects_v = Stringify::Explode(raw, "\n");
 		for (std::string rect_v : rects_v){
