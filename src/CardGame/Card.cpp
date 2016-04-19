@@ -15,6 +15,7 @@ Card::Card(char** argv){
 		desc = argv[9] ? argv[9] : "";
 }
 
+
 void Card::print (){
 	cout << "Nome " << name << endl;
 	cout << "Tipo " << type << endl;
