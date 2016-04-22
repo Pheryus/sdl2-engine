@@ -28,8 +28,6 @@ class App {
 		static const int WindowWidth = 1024;
 		static const int WindowHeight = 600;
 
-		// GameObjects
-		GameObject* mario = NULL;
 
 	private:
 		App();

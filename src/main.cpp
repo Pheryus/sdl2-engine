@@ -19,16 +19,12 @@ using namespace std;
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 
-
 int main(int argc, char* argv[])
 {
    std::vector<Card*> aux = DataBase::Init("cartas.db");
    if (App::GetInstance()->Init()){
-		GameObject* vinnie = new GameObject("Test");
-		std::vector<GameObject*> gebinha;
-		gebinha.push_back(new GameObject("Test"));
-		delete gebinha[0];
-		gebinha.clear();
+		GameObject* vinnie = new GameObject("1");
+		printf ("teste\n");
 		return App::GetInstance()->Execute();
 	}
 }

@@ -56,9 +56,6 @@ bool App::Init() {
 	}
 	Log("[ OK ] sdl2-engine initialized.");
 
-	mario = new GameObject("Test");
-	mario->SetPos((WindowWidth>>1)-140,(WindowHeight>>1)-160);
-
 	return true;
 }
 
@@ -87,10 +84,6 @@ void App::Cleanup() {
 	if(Window) {
 		SDL_DestroyWindow(Window);
 		Window = NULL;
-	}
-	if (mario){
-		delete mario;
-		mario = NULL;
 	}
 	IMG_Quit();
 	SDL_Quit();
