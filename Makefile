@@ -1,45 +1,44 @@
 CXX=g++
 CFLAGS=-std=c++11 -g
 SDL=-lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer
-#SRCS=main.cpp System.cpp GameObject.cpp Mask.cpp TextureBank.cpp FileManager.cpp Stringify.cpp Texture.cpp ExternalLibs/bitmask.cpp
 OBJS=bin/main.o bin/System.o bin/GameObject.o bin/Mask.o bin/TextureBank.o \
      bin/FileManager.o bin/Stringify.o bin/Texture.o bin/bitmask.o \
 	 bin/SongBank.o
 OUT=bin/game
 
-all: main System GameObject TextureBank Mask FileManager Stringify Texture bitmask SongBank
+all: main
 	${CXX} ${OBJS} ${SDL} -o ${OUT}
 	rm bin/*.o
 
-main:
+main: System GameObject
 	${CXX} ${CFLAGS} -c src/main.cpp -o bin/main.o
 
-System:
+System: GameObject TextureBank SongBank
 	${CXX} ${CFLAGS} -c src/System.cpp -o bin/System.o
 
-GameObject:
+GameObject: FileManager Stringify TextureBank Mask
 	${CXX} ${CFLAGS} -c src/GameObject.cpp -o bin/GameObject.o
 
-TextureBank:
+TextureBank: Texture Mask Stringify
 	${CXX} ${CFLAGS} -c src/TextureBank.cpp -o bin/TextureBank.o
 
-Mask:
+Mask: bitmask
 	${CXX} ${CFLAGS} -c src/Mask.cpp -o bin/Mask.o
 
-FileManager:
+Texture: FileManager
+	${CXX} ${CFLAGS} -c src/Texture.cpp -o bin/Texture.o
+
+SongBank: FileManager
+	${CXX} ${CFLAGS} -c src/SongBank.cpp -o bin/SongBank.o
+
+FileManager: Stringify
 	${CXX} ${CFLAGS} -c src/FileManager.cpp -o bin/FileManager.o
 
 Stringify:
 	${CXX} ${CFLAGS} -c src/Stringify.cpp -o bin/Stringify.o
 
-Texture:
-	${CXX} ${CFLAGS} -c src/Texture.cpp -o bin/Texture.o
-
 bitmask:
 	${CXX} ${CFLAGS} -c src/ExternalLibs/bitmask.cpp -o bin/bitmask.o
-
-SongBank:
-	${CXX} ${CFLAGS} -c src/SongBank.cpp -o bin/SongBank.o
 
 run:
 	bin/game

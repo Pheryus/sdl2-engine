@@ -88,7 +88,7 @@ void System::Render() {
 }
 
 //------------------------------------------------------------------------------
-void System::Cleanup() {
+void System::Quit() {
 	TextureBank::Cleanup();
 
 	if(Renderer) {
@@ -99,10 +99,9 @@ void System::Cleanup() {
 		SDL_DestroyWindow(Window);
 		Window = NULL;
 	}
-	if (mario){
-		delete mario;
-		mario = NULL;
-	}
+	for (int i=0; i<gameObjects.size(); i++)
+		gameObjects[i].clear();
+	gameObjects.clear();
 	IMG_Quit();
 	SDL_Quit();
 	Log("[ OK ] System cleaned");
@@ -123,7 +122,7 @@ int System::Execute(bool *conditional) {
 		Render();
 		SDL_Delay(17); // Breath
 	}
-	Cleanup();
+	//Cleanup();
 	return 0;
 }
 

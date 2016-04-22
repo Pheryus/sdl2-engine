@@ -4,6 +4,7 @@
 #include <SDL2/SDL_mixer.h>
 #include <map>
 #include <vector>
+#include <string>
 using namespace std;
 
 class SongBank{

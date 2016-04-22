@@ -1,20 +1,22 @@
 //==============================================================================
 /*
-	Run the app!
-
-	3/11/2014
-    SDLTutorials.com
-    Tim Jones
+	Run the System from here!
 */
 //==============================================================================
 #include "System.h"
 #include <vector>
 #include "GameObject.h"
 int main(int argc, char* argv[]) {
+	// if system succesfull starts
 	if (System::GetInstance()->Init()){
-		GameObject* vinnie = new GameObject("Test");
-		System::GetInstance()->AddGameObject(vinnie);
+		GameObject* Mario = new GameObject("Test");
+		// add game object to render and update routines
+		System::GetInstance()->AddGameObject(Mario);
+		// do the system execute the game
 		System::GetInstance()->Execute();
-		delete vinnie;
+		// Cleanup System
+		System::GetInstance()->Quit();
+		// Free up your resources!
+		delete Mario;
 	}
 }

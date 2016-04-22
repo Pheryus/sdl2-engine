@@ -30,7 +30,6 @@ class System {
 		static const int WindowHeight = 600;
 
 		// GameObjects
-		GameObject* mario = NULL;
 		std::vector<std::vector<GameObject*>> gameObjects;
 
 	private:
@@ -45,9 +44,6 @@ class System {
 		// Render loop (draw)
 		void Render();
 
-		// Free up resources
-		void Cleanup();
-
 	public:
 		int Execute();
 		int Execute(bool*);
@@ -55,6 +51,8 @@ class System {
 	public:
 		// Initialize our SDL game / System
 		bool Init();
+		// Free up resources
+		void Quit();
 		SDL_Renderer* GetRenderer();
 		void AddGameObject(GameObject*);
 		void AddGameObject(GameObject*, int);
