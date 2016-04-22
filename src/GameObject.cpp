@@ -10,6 +10,7 @@ GameObject::GameObject(std::string ID) : ID(ID){
 	dest.y = 0;
 	dest.w = src.w;
 	dest.h = src.h;
+	alive = true;
 }
 
 void GameObject::SetPos(int x, int y){
@@ -49,4 +50,8 @@ SDL_Point GameObject::GetPos(){
 void GameObject::SetCurrentSprite(int index){
 	Current = index;
 	src = TextureBank::GetRects(ID)->at(Current);
+}
+
+bool GameObject::isAlive(){
+	return alive;
 }

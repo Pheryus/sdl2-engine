@@ -2,18 +2,18 @@
 #include "System.h"
 #include "Log.h"
 
-App App::Instance;
+System System::Instance;
 
 //==============================================================================
-App::App() {
+System::System() {
 }
 
 //------------------------------------------------------------------------------
-void App::OnEvent(SDL_Event* Event) {
+void System::OnEvent(SDL_Event* Event) {
 }
 
 //------------------------------------------------------------------------------
-bool App::Init() {
+bool System::Init() {
 	Log("[ .. ] Initializing sdl2-engine...")
 	if(SDL_Init(SDL_INIT_VIDEO) < 0) {
 		Log("[ERRO] Unable to Init SDL: %s", SDL_GetError());
@@ -54,27 +54,41 @@ bool App::Init() {
 		Log("[ERRO] Unable to init TextureBank");
 		return false;
 	}
+
+	gameObjects.resize(2);
+
 	Log("[ OK ] sdl2-engine initialized.");
 
 	return true;
 }
 
 //------------------------------------------------------------------------------
-void App::Loop() {
+void System::Loop() {
+	for (int i = 0; i < gameObjects.size(); i++){
+		int j = 0;
+		for (GameObject* go : gameObjects[i]){
+			go->Update();
+			if (!go->isAlive())
+				gameObjects[i].erase(gameObjects[i].begin()+j);
+			j++;
+		}
+	}
 }
 
 //------------------------------------------------------------------------------
-void App::Render() {
+void System::Render() {
 	SDL_RenderClear(Renderer);
 
 	//TextureBank::Get("Test")->Render(0, 0); // You should really check your pointers
-	mario->Render();
+	for (int i=0; i<gameObjects.size(); i++)
+		for (int j=0; j<gameObjects[i].size(); j++)
+			gameObjects[i][j]->Render();
 
 	SDL_RenderPresent(Renderer);
 }
 
 //------------------------------------------------------------------------------
-void App::Cleanup() {
+void System::Cleanup() {
 	TextureBank::Cleanup();
 
 	if(Renderer) {
@@ -87,13 +101,13 @@ void App::Cleanup() {
 	}
 	IMG_Quit();
 	SDL_Quit();
-	Log("[ OK ] App cleaned");
+	Log("[ OK ] System cleaned");
 }
 
 //------------------------------------------------------------------------------
-int App::Execute(){ return Execute(&Running); }
+int System::Execute(){ return Execute(&Running); }
 
-int App::Execute(bool *conditional) {
+int System::Execute(bool *conditional) {
 	SDL_Event Event;
 
 	while(*conditional) {
@@ -106,14 +120,35 @@ int App::Execute(bool *conditional) {
 		SDL_Delay(17); // Breath
 	}
 	Cleanup();
-	return 1;
+	return 0;
 }
 
 //==============================================================================
 
-SDL_Renderer* App::GetRenderer() { return Renderer; }
-App* App::GetInstance() { return &App::Instance; }
-int App::GetWindowWidth()  { return WindowWidth; }
-int App::GetWindowHeight() { return WindowHeight; }
+SDL_Renderer* System::GetRenderer() { return Renderer; }
+System* System::GetInstance() { return &System::Instance; }
+int System::GetWindowWidth()  { return WindowWidth; }
+int System::GetWindowHeight() { return WindowHeight; }
 
 //==============================================================================
+
+void System::AddGameObject(GameObject* go){
+	AddGameObject(go, gameObjects.size()-1);
+}
+
+void System::AddGameObject(GameObject* go, int layer){
+	if (layer >= gameObjects.size())	layer = gameObjects.size()-1;
+	else if (layer < 0)					layer = 0;
+	gameObjects[layer].push_back(go);
+}
+
+void System::RemGameObject(GameObject* go){
+	for (int i = 0; i < gameObjects.size(); i++){
+		int j = 0;
+		for (GameObject* it : gameObjects[i]){
+			if (go == it)
+				gameObjects[i].erase(gameObjects[i].begin()+j);
+			j++;
+		}
+	}
+}
