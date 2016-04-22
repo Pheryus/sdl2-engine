@@ -11,12 +11,10 @@
 #include <vector>
 #include "GameObject.h"
 int main(int argc, char* argv[]) {
-	if (App::GetInstance()->Init()){
+	if (System::GetInstance()->Init()){
 		GameObject* vinnie = new GameObject("Test");
-		std::vector<GameObject*> gebinha;
-		gebinha.push_back(new GameObject("Test"));
-		delete gebinha[0];
-		gebinha.clear();
-		return App::GetInstance()->Execute();
+		System::GetInstance()->AddGameObject(vinnie);
+		System::GetInstance()->Execute();
+		delete vinnie;
 	}
 }

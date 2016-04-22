@@ -10,16 +10,18 @@ class GameObject{
 		int 	 	Current;
 		void 	 	SetCurrentSprite(int);
 		SDL_Rect	src, dest;
+		bool		alive;
 		std::string ID;
 
 	public:
 		GameObject(std::string);
-		void Update();
-		void Render();
+		virtual void Update();
+		virtual void Render();
 		bool Collide(GameObject*);
 		Mask* 	    GetCurrentMask();
 		SDL_Point   GetPos();
 		void 		SetPos(int, int);
 		std::string GetID();
+		bool		isAlive();
 };
 #endif

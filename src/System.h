@@ -1,23 +1,24 @@
 //==============================================================================
 /*
-	Primary application class
+	Primary Systemlication class
 
 	3/11/2014
 	SDLTutorials.com
 	Tim Jones
 */
 //==============================================================================
-#ifndef __APP_H__
-	#define __APP_H__
+#ifndef __SYSTEM_H__
+	#define __SYSTEM_H__
 
 #include <SDL2/SDL.h>
+#include <vector>
 
 #include "TextureBank.h"
 #include "GameObject.h"
 
-class App {
+class System {
 	private:
-		static App Instance;
+		static System Instance;
 
 		bool Running = true;
 
@@ -30,9 +31,10 @@ class App {
 
 		// GameObjects
 		GameObject* mario = NULL;
+		std::vector<std::vector<GameObject*>> gameObjects;
 
 	private:
-		App();
+		System();
 
 		// Capture SDL Events
 		void OnEvent(SDL_Event* Event);
@@ -51,12 +53,15 @@ class App {
 		int Execute(bool*);
 
 	public:
-		// Initialize our SDL game / app
+		// Initialize our SDL game / System
 		bool Init();
 		SDL_Renderer* GetRenderer();
+		void AddGameObject(GameObject*);
+		void AddGameObject(GameObject*, int);
+		void RemGameObject(GameObject*);
 
 	public:
-		static App* GetInstance();
+		static System* GetInstance();
 
 		static int GetWindowWidth();
 		static int GetWindowHeight();

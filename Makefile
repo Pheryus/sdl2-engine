@@ -1,11 +1,13 @@
 CXX=g++
 CFLAGS=-std=c++11 -g
-SDL=-lSDL2main -lSDL2 -lSDL2_image
+SDL=-lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer
 #SRCS=main.cpp System.cpp GameObject.cpp Mask.cpp TextureBank.cpp FileManager.cpp Stringify.cpp Texture.cpp ExternalLibs/bitmask.cpp
-OBJS=bin/main.o bin/System.o bin/GameObject.o bin/Mask.o bin/TextureBank.o bin/FileManager.o bin/Stringify.o bin/Texture.o bin/bitmask.o
+OBJS=bin/main.o bin/System.o bin/GameObject.o bin/Mask.o bin/TextureBank.o \
+     bin/FileManager.o bin/Stringify.o bin/Texture.o bin/bitmask.o \
+	 bin/SongBank.o
 OUT=bin/game
 
-all: main System GameObject TextureBank Mask FileManager Stringify Texture bitmask
+all: main System GameObject TextureBank Mask FileManager Stringify Texture bitmask SongBank
 	${CXX} ${OBJS} ${SDL} -o ${OUT}
 	rm bin/*.o
 
@@ -35,6 +37,9 @@ Texture:
 
 bitmask:
 	${CXX} ${CFLAGS} -c src/ExternalLibs/bitmask.cpp -o bin/bitmask.o
+
+SongBank:
+	${CXX} ${CFLAGS} -c src/SongBank.cpp -o bin/SongBank.o
 
 run:
 	bin/game

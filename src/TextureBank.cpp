@@ -13,7 +13,7 @@ std::map<std::string, std::vector<Mask*>*> TextureBank::MasksList;
 //=============================================================================
 bool TextureBank::Init() {
 	Cleanup();
-	return LoadFolder("etc/Textures");
+	return LoadFolder("Textures");
 }
 
 //-----------------------------------------------------------------------------
@@ -33,10 +33,10 @@ void TextureBank::Cleanup() {
 
 //-----------------------------------------------------------------------------
 bool TextureBank::LoadFolder(std::string Folder){
-	SDL_Renderer* Renderer = App::GetInstance()->GetRenderer();
+	SDL_Renderer* Renderer = System::GetInstance()->GetRenderer();
 	if(!Renderer) return false;
 
-	std::vector<std::string> Files = FileManager::GetFilesInFolder(Folder); // Relative to CWD
+	std::vector<std::string> Files = FileManager::GetFilesInFolder("etc/"+Folder); // Relative to CWD
 	for(auto Filename : Files) {
         std::string Ext = FileManager::GetFilenameExt(Filename);
 		std::string ID  = FileManager::GetFilenameWithoutExt(Filename);
