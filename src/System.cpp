@@ -10,6 +10,10 @@ System::System() {
 
 //------------------------------------------------------------------------------
 void System::OnEvent(SDL_Event* Event) {
+	if(Event.type == SDL_QUIT) Running = false;
+	else{
+		
+	}
 }
 
 //------------------------------------------------------------------------------
@@ -114,10 +118,8 @@ int System::Execute(bool *conditional) {
 	SDL_Event Event;
 
 	while(*conditional) {
-		while(SDL_PollEvent(&Event) != 0) {
+		while(SDL_PollEvent(&Event))
 			OnEvent(&Event);
-			if(Event.type == SDL_QUIT) Running = false;
-		}
 		Loop();
 		Render();
 		SDL_Delay(17); // Breath
