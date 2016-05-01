@@ -7,7 +7,6 @@
 using std::vector;
 const int deck_size = 50;
 
-
 #pragma once
 class Player
 {

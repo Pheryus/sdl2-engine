@@ -4,6 +4,7 @@
 #include "FileManager.h"
 #include "Log.h"
 #include "Stringify.h"
+#include <algorithm>
 
 //=============================================================================
 std::map<std::string, Texture*> TextureBank::TexList;
@@ -43,7 +44,9 @@ bool TextureBank::LoadFolder(std::string Folder){
         // Skip all non-png files
         if(Ext != "png") continue;
 
+    Log("To add Texture %s from '%s'",ID.data(),Filename.data());
 		AddTexture(Renderer, ID, Filename);
+		Log("Texture %s added. Total: %d",ID.data(),TexList.size());
 		AddRects(ID);
 		AddMasks(ID);
 	}
@@ -70,7 +73,7 @@ void TextureBank::AddTexture(SDL_Renderer* Renderer, std::string ID, std::string
 		Log("[ERRO] Unable to Load Texture: %s", ID.c_str());
 		return;
 	}
-    TexList[ID] = NewTexture;
+    TexList.insert(std::pair<std::string, Texture*>(ID,NewTexture));
 }
 
 //-----------------------------------------------------------------------------
@@ -118,7 +121,7 @@ void TextureBank::AddRects(std::string ID){
 	}
 	else{
 		Log("[INFO] Mask info from sprite \"%s\" not found.\
-		Setting 1 mask with full sprite size.",ID.data());
+		Setting a mask with full sprite size.",ID.data());
 		SDL_Texture* tex = TexList[ID]->Get();
 		int h,w;
 		SDL_QueryTexture(tex, 0, 0, &w, &h);

@@ -30,6 +30,7 @@ bool Texture::Load(SDL_Renderer* Renderer, std::string Filename) {
 		Log("Unable to load image : %s : %s", Filename.c_str(), IMG_GetError());
 		return false;
 	}
+	Log("Surface Loaded");
 
     // Convert SDL surface to a texture
 	/*SDLTexture = SDL_CreateTextureFromSurface(Renderer, TempSurface);
@@ -40,8 +41,9 @@ bool Texture::Load(SDL_Renderer* Renderer, std::string Filename) {
 
 	// Created to give STREAMING access to texture. This is needed to access
 	// pixels to determine its masks
-	SDLTexture = SDL_CreateTexture(Renderer, SDL_PIXELFORMAT_ABGR8888,
+	SDLTexture = SDL_CreateTexture(Renderer, TempSurface->format->format,
 		SDL_TEXTUREACCESS_STREAMING, TempSurface->w, TempSurface->h);
+	Log("Texture Created");
 	if(SDLTexture == NULL) {
 		Log("Unable to create SDL Texture : %s : %s", Filename.c_str(), IMG_GetError());
 		return false;
@@ -49,9 +51,15 @@ bool Texture::Load(SDL_Renderer* Renderer, std::string Filename) {
 
 	void* pixels;
 	SDL_SetTextureBlendMode(SDLTexture, SDL_BLENDMODE_BLEND);
-    SDL_LockTexture(SDLTexture, &TempSurface->clip_rect, &pixels, &TempSurface->pitch);
-    memcpy(pixels, TempSurface->pixels, (TempSurface->w * TempSurface->h)<<2);
+	Log("BlendMode Setted");
+  SDL_LockTexture(SDLTexture, &TempSurface->clip_rect, &pixels, &pitch);
+  Log("Texture Locked. Copying %x, %x, %d, %d",pixels,TempSurface->pixels, TempSurface->w,TempSurface->h);
+  Log("largura %d",sizeof(TempSurface->pixels));
+  //Loucura loucura loucura
+  memcpy(pixels, TempSurface->pixels, (TempSurface->pitch * TempSurface->h));
+  Log("Memory copied");	
 	SDL_UnlockTexture(SDLTexture);
+	Log("Texture Filled");
     // Grab dimensions and pitch
 	Width = TempSurface->w;
 	Height = TempSurface->h;

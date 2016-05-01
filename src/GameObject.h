@@ -4,7 +4,7 @@
 #include <string>
 #include <SDL2/SDL.h>
 #include "Mask.h"
-
+#include <iostream>
 class GameObject{
 	private:
 		int 	 	Current;

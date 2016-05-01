@@ -2,10 +2,13 @@
 #include <stdlib.h>
 #include <vector>
 #include <iostream>
-using namespace std;
-#pragma once
+#include "../GameObject.h"
 
-class Card
+using namespace std;
+#pragma once 
+
+
+class Card 
 {
 private:
 	int power, lt, res;
@@ -17,5 +20,5 @@ public:
 	int id_card;
 	int is_equal(char* ct, char* type);
 	void print();
+	int GetID();
 };
-

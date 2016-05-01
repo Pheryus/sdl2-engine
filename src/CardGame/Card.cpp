@@ -15,6 +15,9 @@ Card::Card(char** argv){
 		desc = argv[9] ? argv[9] : "";
 }
 
+int Card::GetID(){
+	return id_card;
+}
 
 void Card::print (){
 	cout << "Nome " << name << endl;

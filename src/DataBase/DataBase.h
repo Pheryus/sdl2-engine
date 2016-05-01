@@ -1,3 +1,6 @@
+#ifndef __DATABASE_H__
+	#define __DATABASE_H__
+
 #include <sqlite3.h>
 #include <stdio.h>
 #include <string>
@@ -7,10 +10,11 @@
 
 class DataBase{
 	public:
-		static std::vector<Card*> Init(std::string address);
+		static std::vector<Card*> Init(std::string);
 	private:
 		static std::vector<Card*> db_cards;
 		static int callback(void *NotUsed, int argc, char **argv, char **azColName);
 };
 
 
+#endif

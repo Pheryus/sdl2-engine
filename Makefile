@@ -1,5 +1,5 @@
 CXX=g++
-CFLAGS=-std=c++11 -g
+CFLAGS=-std=c++11 -c -g
 SDL=-lSDL2main -lSDL2 -lSDL2_image -lsqlite3 -lSDL2_mixer
 OBJS=bin/main.o bin/System.o bin/GameObject.o bin/Mask.o bin/TextureBank.o \
 bin/FileManager.o bin/Stringify.o bin/Texture.o bin/bitmask.o \
