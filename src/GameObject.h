@@ -5,6 +5,7 @@
 #include <SDL2/SDL.h>
 #include "Mask.h"
 #include <iostream>
+
 class GameObject{
 	private:
 		int 	 	Current;
@@ -14,7 +15,7 @@ class GameObject{
 		std::string ID;
 
 	public:
-		GameObject(std::string);
+		GameObject(std::string) ;
 		virtual void Update();
 		virtual void Render();
 		bool Collide(GameObject*);
@@ -23,5 +24,8 @@ class GameObject{
 		void 		SetPos(int, int);
 		std::string GetID();
 		bool		isAlive();
+		void Rediment(float v);
+		void SetID(std::string id);
+		
 };
 #endif

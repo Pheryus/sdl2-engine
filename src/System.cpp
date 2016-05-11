@@ -56,6 +56,8 @@ bool System::Init() {
 	}
 
 	gameObjects.resize(2);
+	actual = 0;
+	
 
 	Log("[ OK ] sdl2-engine initialized.");
 
@@ -113,7 +115,18 @@ int System::Execute(bool *conditional) {
 	while(*conditional) {
 		while(SDL_PollEvent(&Event) != 0) {
 			OnEvent(&Event);
+
 			if(Event.type == SDL_QUIT) Running = false;
+			if (Event.type == SDL_KEYUP){
+				int id = std::stoi(gameObjects[1][0]->GetID());
+				printf ("teste\n");
+				RemGameObject(gameObjects[1][0]);	
+				printf ("teste\n");
+				GameObject* test = new GameObject(std::to_string(id+2));
+				test->Rediment(0.5);
+				AddGameObject(test, 1);
+
+			}
 		}
 		Loop();
 		Render();
@@ -143,6 +156,7 @@ void System::AddGameObject(GameObject* go, int layer){
 }
 
 void System::RemGameObject(GameObject* go){
+
 	for (int i = 0; i < gameObjects.size(); i++){
 		int j = 0;
 		for (GameObject* it : gameObjects[i]){

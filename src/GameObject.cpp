@@ -6,6 +6,7 @@
 GameObject::GameObject(std::string ID) : ID(ID){
 	SetCurrentSprite(0);
 	// Redefine later
+
 	dest.x = 0;
 	dest.y = 0;
 	dest.w = src.w;
@@ -17,6 +18,7 @@ void GameObject::SetPos(int x, int y){
 	dest.x = x;
 	dest.y = y;
 }
+
 
 void GameObject::Update(){}
 
@@ -38,6 +40,10 @@ std::string GameObject::GetID(){
 	return ID;
 }
 
+void GameObject::SetID(std::string id){
+	ID = id;
+}
+
 Mask* GameObject::GetCurrentMask(){
 	return TextureBank::GetMasks(ID)->at(Current);
 }
@@ -47,6 +53,12 @@ SDL_Point GameObject::GetPos(){
 	return p;
 }
 
+	void GameObject::Rediment(float v){
+	dest.w *= v;
+	dest.h *= v; 
+}
+
+
 void GameObject::SetCurrentSprite(int index){
 	Current = index;
 	src = TextureBank::GetRects(ID)->at(Current);
@@ -54,4 +66,4 @@ void GameObject::SetCurrentSprite(int index){
 
 bool GameObject::isAlive(){
 	return alive;
-}
+}	

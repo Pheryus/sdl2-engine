@@ -29,7 +29,7 @@ void TextureBank::Cleanup() {
 	TexList.clear();
 	RectsList.clear();
 	MasksList.clear();
-	Log("[ OK ] TextureBank Cleaned up");
+//	Log("[ OK ] TextureBank Cleaned up");
 }
 
 //-----------------------------------------------------------------------------
@@ -44,9 +44,9 @@ bool TextureBank::LoadFolder(std::string Folder){
         // Skip all non-png files
         if(Ext != "png") continue;
 
-    Log("To add Texture %s from '%s'",ID.data(),Filename.data());
+//    Log("To add Texture %s from '%s'",ID.data(),Filename.data());
 		AddTexture(Renderer, ID, Filename);
-		Log("Texture %s added. Total: %d",ID.data(),TexList.size());
+	//	Log("Texture %s added. Total: %d",ID.data(),TexList.size());
 		AddRects(ID);
 		AddMasks(ID);
 	}
@@ -70,7 +70,7 @@ void TextureBank::AddTexture(SDL_Renderer* Renderer, std::string ID, std::string
 
     Texture* NewTexture = new Texture();
     if(NewTexture->Load(Renderer, Filename) == false) {
-		Log("[ERRO] Unable to Load Texture: %s", ID.c_str());
+	//	Log("[ERRO] Unable to Load Texture: %s", ID.c_str());
 		return;
 	}
     TexList.insert(std::pair<std::string, Texture*>(ID,NewTexture));
@@ -93,7 +93,7 @@ void TextureBank::FreeTexture(std::string ID){
 	MasksList[ID]->clear();
 	delete RectsList[ID];
 	MasksList.erase(ID);
-	Log ("[ OK ] Cleaned sprite: %s",ID.data());
+	//Log ("[ OK ] Cleaned sprite: %s",ID.data());
 }
 
 //-----------------------------------------------------------------------------
@@ -120,8 +120,8 @@ void TextureBank::AddRects(std::string ID){
 		}
 	}
 	else{
-		Log("[INFO] Mask info from sprite \"%s\" not found.\
-		Setting a mask with full sprite size.",ID.data());
+		//Log("[INFO] Mask info from sprite \"%s\" not found.\
+		//Setting a mask with full sprite size.",ID.data());
 		SDL_Texture* tex = TexList[ID]->Get();
 		int h,w;
 		SDL_QueryTexture(tex, 0, 0, &w, &h);

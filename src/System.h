@@ -12,7 +12,8 @@
 
 #include <SDL2/SDL.h>
 #include <vector>
-
+#include <string>
+#include <stdio.h>
 #include "TextureBank.h"
 #include "GameObject.h"
 
@@ -29,8 +30,9 @@ class System {
 		static const int WindowWidth = 1024;
 		static const int WindowHeight = 600;
 		// GameObjects
-		GameObject* mario = NULL;
 		std::vector<std::vector<GameObject*>> gameObjects;
+		GameObject* mouse;
+		int actual;
 
 	private:
 		System();

@@ -12,15 +12,21 @@
 
 using namespace std;
 //Screen dimension constant
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+const int SCREEN_WIDTH = 800;
+const int SCREEN_HEIGHT = 600;
 
 int main(int argc, char* argv[]) {
-	//In_Play::SetDeckPlayer1("0");	
+	
+	vector<Card*> deck_cards = DataBase::Init("0");
+
 	if (System::GetInstance()->Init()){
-		//TextureBank::LoadFolder("Textures/Cards_bd");
-		GameObject* test = new GameObject("2");
-		System::GetInstance()->AddGameObject(test);
+		TextureBank::LoadFolder("Textures/Cards_bd");
+		for (int i=0; i < 6; i++){
+				GameObject* test = new GameObject(to_string(deck_cards[2*i]->GetID()));	
+				test->SetPos(149*i,300);
+				test->Rediment(0.5);
+				System::GetInstance()->AddGameObject(test);
+			}
 		System::GetInstance()->Execute();
 	}
 }
