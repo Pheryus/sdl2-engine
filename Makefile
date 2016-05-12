@@ -3,9 +3,9 @@ CFLAGS=-std=c++11 -c -g
 SDL=-lSDL2main -lSDL2 -lSDL2_image -lsqlite3 -lSDL2_mixer
 OBJS=bin/main.o bin/System.o bin/GameObject.o bin/Mask.o bin/TextureBank.o \
 bin/FileManager.o bin/Stringify.o bin/Texture.o bin/bitmask.o \
-	bin/Card.o bin/Create_Deck.o bin/In_Play.o bin/Player.o bin/DataBase.o bin/SongBank.o
+	bin/Card.o bin/Create_Deck.o bin/In_Play.o bin/Player.o bin/DataBase.o bin/SongBank.o bin/Mouse.o
 OUT=bin/game
-all: main System GameObject TextureBank Mask FileManager Stringify Texture bitmask Card Create_Deck In_Play Player DataBase SongBank
+all: main System GameObject TextureBank Mask FileManager Stringify Texture bitmask Card Create_Deck In_Play Player DataBase SongBank Mouse
 			${CXX} ${OBJS} ${SDL} -o ${OUT}
 			rm bin/*.o
 
@@ -53,6 +53,9 @@ DataBase:
 
 SongBank:
 	${CXX} ${CFLAGS} -c src/SongBank.cpp -o bin/SongBank.o
+
+Mouse:
+	${CXX} ${CFLAGS} -c src/Mouse.cpp -o bin/Mouse.o
 
 run:
 	bin/game

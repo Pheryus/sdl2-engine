@@ -10,6 +10,7 @@ System::System() {
 
 //------------------------------------------------------------------------------
 void System::OnEvent(SDL_Event* Event) {
+	gameObjects[2][0]->Update(Event);
 }
 
 //------------------------------------------------------------------------------
@@ -26,41 +27,43 @@ bool System::Init() {
 	}
 
 	if((Window = SDL_CreateWindow(
-		"My SDL Game",
+		"Pedro Lima Gebao",
 		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 		WindowWidth, WindowHeight, SDL_WINDOW_SHOWN)
 	) == NULL) {
 		Log("[ERRO] Unable to create SDL Window: %s", SDL_GetError());
 		return false;
 	}
+	SDL_SetWindowFullscreen(Window,SDL_WINDOW_FULLSCREEN);
 
 	PrimarySurface = SDL_GetWindowSurface(Window);
-
+	
 	if((Renderer = SDL_CreateRenderer(Window, -1, SDL_RENDERER_ACCELERATED)) == NULL) {
 	    Log("[ERRO] Unable to create renderer");
 	    return false;
 	}
 
 	SDL_SetRenderDrawColor(Renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-
+		
+	SDL_DisplayMode current;
+	if (SDL_GetCurrentDisplayMode(0, &current) != 0){
+		  SDL_Log("Could not get display mode for video display #%d: %s", 0, SDL_GetError());
+		  return false;
+	}
+	
 	// Initialize image loading for PNGs
 	if(!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
 		Log("[ERRO] Unable to init SDL_image: %s", IMG_GetError());
 		return false;
 	}
-
 	// Load all of our Textures (see TextureBank class for expected folder)
 	if(TextureBank::Init() == false) {
 		Log("[ERRO] Unable to init TextureBank");
 		return false;
 	}
-
-	gameObjects.resize(2);
-	actual = 0;
-	
-
-	Log("[ OK ] sdl2-engine initialized.");
-
+	monitor = (float) current.w/(float)WindowWidth;
+	gameObjects.resize(3);
+	//Log("[ OK ] sdl2-engine initialized.");
 	return true;
 }
 
@@ -115,19 +118,9 @@ int System::Execute(bool *conditional) {
 	while(*conditional) {
 		while(SDL_PollEvent(&Event) != 0) {
 			OnEvent(&Event);
-
-			if(Event.type == SDL_QUIT) Running = false;
-			if (Event.type == SDL_KEYUP){
-				int id = std::stoi(gameObjects[1][0]->GetID());
-				printf ("teste\n");
-				RemGameObject(gameObjects[1][0]);	
-				printf ("teste\n");
-				GameObject* test = new GameObject(std::to_string(id+2));
-				test->Rediment(0.5);
-				AddGameObject(test, 1);
-
-			}
-		}
+			if(Event.type == SDL_QUIT) 
+				Running = false;
+			}	
 		Loop();
 		Render();
 		SDL_Delay(17); // Breath
@@ -147,6 +140,10 @@ int System::GetWindowHeight() { return WindowHeight; }
 
 void System::AddGameObject(GameObject* go){
 	AddGameObject(go, gameObjects.size()-1);
+}
+
+float System::GetMonitor(){
+	return monitor;
 }
 
 void System::AddGameObject(GameObject* go, int layer){

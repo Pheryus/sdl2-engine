@@ -2,25 +2,28 @@
 #include "FileManager.h"
 #include "Stringify.h"
 #include "TextureBank.h"
+#include "System.h"
 
 GameObject::GameObject(std::string ID) : ID(ID){
 	SetCurrentSprite(0);
-	// Redefine later
-
 	dest.x = 0;
 	dest.y = 0;
 	dest.w = src.w;
 	dest.h = src.h;
+	window = System::GetInstance()->GetMonitor();
+	ResizeWindow();
 	alive = true;
 }
 
 void GameObject::SetPos(int x, int y){
 	dest.x = x;
 	dest.y = y;
+	ResizeCoor();
 }
 
-
 void GameObject::Update(){}
+
+void GameObject::Update(SDL_Event* Event){}
 
 void GameObject::Render(){
 	TextureBank::Get(ID)->Render(
@@ -53,11 +56,15 @@ SDL_Point GameObject::GetPos(){
 	return p;
 }
 
-	void GameObject::Rediment(float v){
-	dest.w *= v;
-	dest.h *= v; 
-}
+	void GameObject::ResizeCoor(){
+		dest.x *= window;
+		dest.y *= window;
+	}
 
+	void GameObject::ResizeWindow(){
+	dest.w *= window;
+	dest.h *= window; 
+	}
 
 void GameObject::SetCurrentSprite(int index){
 	Current = index;

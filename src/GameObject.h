@@ -6,17 +6,21 @@
 #include "Mask.h"
 #include <iostream>
 
+
 class GameObject{
 	private:
 		int 	 	Current;
+		float window;
 		void 	 	SetCurrentSprite(int);
-		SDL_Rect	src, dest;
+		
 		bool		alive;
 		std::string ID;
 
 	public:
+		SDL_Rect	src, dest;
 		GameObject(std::string) ;
 		virtual void Update();
+		virtual void Update(SDL_Event*);
 		virtual void Render();
 		bool Collide(GameObject*);
 		Mask* 	    GetCurrentMask();
@@ -24,8 +28,9 @@ class GameObject{
 		void 		SetPos(int, int);
 		std::string GetID();
 		bool		isAlive();
-		void Rediment(float v);
+		void ResizeWindow();
+		void ResizeCoor();
 		void SetID(std::string id);
-		
+
 };
 #endif

@@ -16,19 +16,21 @@
 #include <stdio.h>
 #include "TextureBank.h"
 #include "GameObject.h"
-
+#include "Mouse.h"
 class System {
 	private:
 		static System Instance;
 
 		bool Running = true;
-
+		float monitor;
 		SDL_Window* Window = NULL;
 		SDL_Renderer* Renderer = NULL;
 		SDL_Surface* PrimarySurface = NULL;
 
-		static const int WindowWidth = 1024;
-		static const int WindowHeight = 600;
+		int windowX, windowY;
+
+		static const int WindowWidth = 1920;
+		static const int WindowHeight = 1080;
 		// GameObjects
 		std::vector<std::vector<GameObject*>> gameObjects;
 		GameObject* mouse;
@@ -60,10 +62,9 @@ class System {
 		void AddGameObject(GameObject*);
 		void AddGameObject(GameObject*, int);
 		void RemGameObject(GameObject*);
-
+		float GetMonitor();
 	public:
 		static System* GetInstance();
-
 		static int GetWindowWidth();
 		static int GetWindowHeight();
 };
