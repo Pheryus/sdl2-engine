@@ -14,7 +14,7 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
 	
-	vector<Card*> deck_cards = DataBase::Init("0");
+	
 	
 	if (System::GetInstance()->Init()){
 		TextureBank::LoadFolder("Textures/Cards_bd");

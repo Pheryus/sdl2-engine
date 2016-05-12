@@ -8,7 +8,7 @@ std::vector<Card*> DataBase::db_cards;
 
 //Le id, abre outro bd, retorna seus valores, e coloca em X cartas, onde X é o valor da coluna NUM
 
-std::vector<Card*> DataBase::Init(std::string i){
+std::vector<Card*> DataBase::Init(int i){
 
    sqlite3 *db;
    char *zErrMsg = 0;
@@ -23,12 +23,14 @@ std::vector<Card*> DataBase::Init(std::string i){
       fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
       exit(0);
    }
-   sql = "ATTACH DATABASE 'etc/DataBase/deck" + i +".db' AS deckfile";
+   sql = "ATTACH DATABASE 'etc/DataBase/deck" + to_string(i) +".db' AS deckfile";
+
    rc = sqlite3_exec(db, sql.data(), NULL, 0, &zErrMsg);
    if( rc != SQLITE_OK ){
       fprintf(stderr, "SQL error: %s\n", zErrMsg);
       sqlite3_free(zErrMsg);
    }
+   
    sql = "SELECT * from cards join deckfile.deck using (id)";
    // Execute SQL statement 
    rc = sqlite3_exec(db, sql.data(), callback, 0, &zErrMsg);

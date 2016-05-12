@@ -8,7 +8,7 @@
 
 
 class GameObject{
-	private:
+		private:
 		int 	 	Current;
 		float window;
 		void 	 	SetCurrentSprite(int);
@@ -28,7 +28,7 @@ class GameObject{
 		void 		SetPos(int, int);
 		std::string GetID();
 		bool		isAlive();
-		void ResizeWindow();
+		void ResizeImage();
 		void ResizeCoor();
 		void SetID(std::string id);
 

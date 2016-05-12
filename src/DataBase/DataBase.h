@@ -10,11 +10,10 @@
 
 class DataBase{
 	public:
-		static std::vector<Card*> Init(std::string);
+		static std::vector<Card*> Init(int i);
 	private:
 		static std::vector<Card*> db_cards;
 		static int callback(void *NotUsed, int argc, char **argv, char **azColName);
 };
-
 
 #endif

@@ -1,8 +1,6 @@
 #include "Card.h"
 
-//int* atrib, int* cost, char* nam, char* typ, char* sec_typ, char* des
-
-Card::Card(char** argv){
+Card::Card(char** argv) : GameObject() {
 		id_card = atoi(argv[0]);
 		name = argv[1];
 		type = argv[2];
