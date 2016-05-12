@@ -21,6 +21,10 @@ bool Mask::Overlap(Mask* m, int xoffset, int yoffset){
 	return bitmask_overlap(bitmask, m->GetBitmask(), xoffset, yoffset);
 }
 
+bool Mask::CollidePoint(int xoffset, int yoffset){
+	return bitmask_getbit(bitmask, xoffset, yoffset);
+}
+
 bitmask_t* Mask::GetBitmask(){
 	return bitmask;
 }

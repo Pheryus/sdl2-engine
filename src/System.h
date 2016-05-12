@@ -15,54 +15,45 @@
 
 #include "TextureBank.h"
 #include "GameObject.h"
+#include "GameControl.h"
 
 class System {
 	private:
 		static System Instance;
-
-		bool Running = true;
+		int WindowWidth;
+		int WindowHeight;
 
 		SDL_Window* Window = NULL;
 		SDL_Renderer* Renderer = NULL;
 		SDL_Surface* PrimarySurface = NULL;
 
-		static const int WindowWidth = 1024;
-		static const int WindowHeight = 600;
-
-		// GameObjects
+		// GameObjects e GameControl
 		std::vector<std::vector<GameObject*>> gameObjects;
+		GameControl* gameControl;
 
-	private:
+	protected:
 		System();
-
-		// Capture SDL Events
-		void OnEvent(SDL_Event* Event);
-
-		// Logic loop
-		void Loop();
-
-		// Render loop (draw)
-		void Render();
+		void SeekEvents();	// Capture SDL Events
+		void Loop();		// Logic loop
+		void Render();		// Render loop (draw)
 
 	public:
+		static System* GetInstance();	// Get a instance of this class
+		bool Init();					// Initialize our SDL game / System
+		void Quit();
+		void SetFullScreen();
+		void ResizeWindow(int,int);
 		int Execute();
 		int Execute(bool*);
 
 	public:
-		// Initialize our SDL game / System
-		bool Init();
-		// Free up resources
-		void Quit();
 		SDL_Renderer* GetRenderer();
-		void AddGameObject(GameObject*);
-		void AddGameObject(GameObject*, int);
-		void RemGameObject(GameObject*);
-
-	public:
-		static System* GetInstance();
-
-		static int GetWindowWidth();
-		static int GetWindowHeight();
+		void AddGameObject(void*);
+		void AddGameObject(void*, int);
+		void RemGameObject(void*);
+		int GetWindowWidth();
+		int GetWindowHeight();
+		void SetGameControl(GameControl*);
 };
 
 #endif

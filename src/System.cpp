@@ -1,6 +1,7 @@
 //==============================================================================
 #include "System.h"
 #include "Log.h"
+#include "Event.h"
 
 System System::Instance;
 
@@ -9,11 +10,15 @@ System::System() {
 }
 
 //------------------------------------------------------------------------------
-void System::OnEvent(SDL_Event* Event) {
-	if(Event.type == SDL_QUIT) Running = false;
+void System::SeekEvents() {
+	Event* ev = Event::GetInstance();
+	ev->update();
+	/*if (ev->QuitRequest()){}
+		Running = false;
 	else{
-		
-	}
+		if (ev->MouseButtonUp(SDL_BUTTON_LEFT))
+			Log("Esquerdo");
+	}*/
 }
 
 //------------------------------------------------------------------------------
@@ -29,6 +34,8 @@ bool System::Init() {
 		return false;
 	}
 
+	WindowWidth = 1024;
+	WindowHeight = 600;
 	if((Window = SDL_CreateWindow(
 		"My SDL Game",
 		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
@@ -60,6 +67,7 @@ bool System::Init() {
 	}
 
 	gameObjects.resize(2);
+	gameControl = NULL;
 
 	Log("[ OK ] sdl2-engine initialized.");
 
@@ -68,6 +76,7 @@ bool System::Init() {
 
 //------------------------------------------------------------------------------
 void System::Loop() {
+	gameControl->update();
 	for (int i = 0; i < gameObjects.size(); i++){
 		int j = 0;
 		for (GameObject* go : gameObjects[i]){
@@ -112,19 +121,29 @@ void System::Quit() {
 }
 
 //------------------------------------------------------------------------------
-int System::Execute(){ return Execute(&Running); }
+void System::SetFullScreen(){
+	SDL_SetWindowFullscreen(Window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+	SDL_GetWindowSize(Window, &WindowWidth, &WindowHeight);
+}
 
-int System::Execute(bool *conditional) {
-	SDL_Event Event;
+//------------------------------------------------------------------------------
+void System::ResizeWindow(int w, int h){
+	if(SDL_GetWindowFlags(Window) & SDL_WINDOW_FULLSCREEN_DESKTOP)
+		SDL_SetWindowFullscreen(Window, 0);
+	WindowWidth = w;
+	WindowHeight = h;
+	SDL_SetWindowSize(Window, WindowWidth, WindowHeight);
+}
 
-	while(*conditional) {
-		while(SDL_PollEvent(&Event))
-			OnEvent(&Event);
+//------------------------------------------------------------------------------
+int System::Execute() {
+
+	while(gameControl->isRunning()) {
+		SeekEvents();
 		Loop();
 		Render();
 		SDL_Delay(17); // Breath
 	}
-	//Cleanup();
 	return 0;
 }
 
@@ -137,23 +156,44 @@ int System::GetWindowHeight() { return WindowHeight; }
 
 //==============================================================================
 
-void System::AddGameObject(GameObject* go){
+GameObject* convert_pointer(void* p){
+	GameObject* go;
+	try{
+		go = (GameObject*) p;
+	}
+	catch (int e){
+		Log("[INFO] Given pointer 0x%x can not be converted to GameObject. Ignoring...",go);
+		return NULL;
+	}
+	return go;
+}
+
+void System::AddGameObject(void* go){
 	AddGameObject(go, gameObjects.size()-1);
 }
 
-void System::AddGameObject(GameObject* go, int layer){
-	if (layer >= gameObjects.size())	layer = gameObjects.size()-1;
-	else if (layer < 0)					layer = 0;
-	gameObjects[layer].push_back(go);
+void System::AddGameObject(void* go_p, int layer){
+	GameObject* go = convert_pointer(go_p);
+	if (go){
+		if (layer >= gameObjects.size())	layer = gameObjects.size()-1;
+		else if (layer < 0)					layer = 0;
+		gameObjects[layer].push_back(go);
+	}
 }
 
-void System::RemGameObject(GameObject* go){
-	for (int i = 0; i < gameObjects.size(); i++){
-		int j = 0;
-		for (GameObject* it : gameObjects[i]){
-			if (go == it)
-				gameObjects[i].erase(gameObjects[i].begin()+j);
-			j++;
+void System::RemGameObject(void* go_p){
+	GameObject* go = convert_pointer(go_p);
+	if (go)
+		for (int i = 0, j = 0; i < gameObjects.size(); i++, j=0){
+			for (GameObject* it : gameObjects[i]){
+				if (go == it)
+					gameObjects[i].erase(gameObjects[i].begin()+j);
+				j++;
+			}
 		}
-	}
+}
+
+void System::SetGameControl(GameControl* gc){
+	gameControl = gc;
+	//gc->setGameObjects(gameObjects);
 }

@@ -4,6 +4,7 @@
 #include "FileManager.h"
 #include "Log.h"
 #include "Stringify.h"
+#include <algorithm>
 
 //=============================================================================
 std::map<std::string, Texture*> TextureBank::TexList;
@@ -37,6 +38,7 @@ bool TextureBank::LoadFolder(std::string Folder){
 	if(!Renderer) return false;
 
 	std::vector<std::string> Files = FileManager::GetFilesInFolder("etc/"+Folder); // Relative to CWD
+	std::sort(Files.begin(),Files.end());
 	for(auto Filename : Files) {
         std::string Ext = FileManager::GetFilenameExt(Filename);
 		std::string ID  = FileManager::GetFilenameWithoutExt(Filename);
@@ -117,8 +119,8 @@ void TextureBank::AddRects(std::string ID){
 		}
 	}
 	else{
-		Log("[INFO] Mask info from sprite \"%s\" not found.\
-		Setting 1 mask with full sprite size.",ID.data());
+		Log("[INFO] Mask info from sprite \"%s\" not found. Defining a mask\
+with full sprite size.",ID.data());
 		SDL_Texture* tex = TexList[ID]->Get();
 		int h,w;
 		SDL_QueryTexture(tex, 0, 0, &w, &h);

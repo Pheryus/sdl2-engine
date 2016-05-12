@@ -18,6 +18,7 @@ class Mask {
 		Mask(SDL_Texture*, SDL_Rect, int);
 		~Mask();
 		bool Overlap(Mask*, int, int);
+		bool CollidePoint(int, int);
 		bitmask_t* GetBitmask();
 };
 #endif
