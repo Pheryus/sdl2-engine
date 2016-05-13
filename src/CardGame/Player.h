@@ -4,10 +4,7 @@
 #include "Card.h"
 #include <time.h>
 
-using std::vector;
-const int deck_size = 50;
 
-#pragma once
 class Player
 {
 	private:
@@ -16,7 +13,6 @@ class Player
 
 	public:
 		Player();
-		vector<Card*> deck;
 		int add_card_deck(int id);
 		void show_deck();
 		void create_deck();

@@ -1,5 +1,4 @@
 #include "Create_Deck.h"
-#include "Card.h"
 
 std::vector <int> Create_Deck::id_cards;
 

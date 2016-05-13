@@ -44,23 +44,10 @@ bool Texture::Load(SDL_Renderer* Renderer, std::string Filename) {
 
 	void* pixels;
 	SDL_SetTextureBlendMode(SDLTexture, SDL_BLENDMODE_BLEND);
-<<<<<<< HEAD
-	//Log("BlendMode Setted");
   SDL_LockTexture(SDLTexture, &TempSurface->clip_rect, &pixels, &pitch);
-  //Log("Texture Locked. Copying %x, %x, %d, %d",pixels,TempSurface->pixels, TempSurface->w,TempSurface->h);
-  //Log("largura %d",sizeof(TempSurface->pixels));
-  //Loucura loucura loucura
-  memcpy(pixels, TempSurface->pixels, (TempSurface->pitch * TempSurface->h));
-//  Log("Memory copied");	
-	SDL_UnlockTexture(SDLTexture);
-	//Log("Texture Filled");
-    // Grab dimensions and pitch
-=======
-    SDL_LockTexture(SDLTexture, &TempSurface->clip_rect, &pixels, &pitch);
 	memcpy(pixels, TempSurface->pixels, TempSurface->h * TempSurface->pitch);
 	SDL_UnlockTexture(SDLTexture);
 	// Grab dimensions and pitch
->>>>>>> upstream/master
 	Width = TempSurface->w;
 	Height = TempSurface->h;
 	SDL_FreeSurface(TempSurface);

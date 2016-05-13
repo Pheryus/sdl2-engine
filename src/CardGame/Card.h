@@ -1,3 +1,6 @@
+#ifndef __CARD_H__
+	#define __CARD_H__
+
 #include <string>
 #include <stdlib.h>
 #include <vector>
@@ -25,3 +28,4 @@ public:
 
 };
 
+#endif;

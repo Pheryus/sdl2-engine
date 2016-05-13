@@ -34,8 +34,6 @@ bool System::Init() {
 		return false;
 	}
 
-	WindowWidth = 1024;
-	WindowHeight = 600;
 	if((Window = SDL_CreateWindow(
 		"Pedro Lima Gebao",
 		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,

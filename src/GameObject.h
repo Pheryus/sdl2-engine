@@ -8,11 +8,7 @@
 
 
 class GameObject{
-<<<<<<< HEAD
-		private:
-=======
 	protected:
->>>>>>> upstream/master
 		int 	 	Current;
 		float window;
 		void 	 	SetCurrentSprite(int);
@@ -23,7 +19,7 @@ class GameObject{
 
 	public:
 		SDL_Rect	src, dest;
-		GameObject(std::string) ;
+		GameObject(std::string);
 		virtual void Update();
 		virtual void Update(SDL_Event*);
 		virtual void Render();
@@ -33,17 +29,13 @@ class GameObject{
 		SDL_Point   GetPos();
 		void 		SetPos(int, int);
 		std::string GetID();
+		void SetID(std::string);
 		bool		isAlive();
-<<<<<<< HEAD
+
 		void ResizeImage();
 		void ResizeCoor();
-		void SetID(std::string id);
-
-=======
 		void 		setAlive(bool);
 		bool		isActive();
 		void 		setActive(bool);
-		void 		resize(float);
->>>>>>> upstream/master
 };
 #endif

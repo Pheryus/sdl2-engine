@@ -1,5 +1,6 @@
 #include "Player.h"
 
+/*
 
 Player::Player(){
 	actual = deck_size;
@@ -10,7 +11,7 @@ void Player::show_deck(){
 		printf("card %d in deck\n", deck[i]);
 }
 
-/*
+
 void Player::shuffle(){
 	int x;
 	int i;

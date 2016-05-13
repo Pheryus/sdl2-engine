@@ -22,17 +22,13 @@ class System {
 	private:
 		static System Instance;
 		float monitor;
-		int WindowWidth;
-		int WindowHeight;
 
 		SDL_Window* Window = NULL;
 		SDL_Renderer* Renderer = NULL;
 		SDL_Surface* PrimarySurface = NULL;
 
-		int windowX, windowY;
-
-		static const int WindowWidth = 1920;
-		static const int WindowHeight = 1080;
+		int WindowWidth = 1920;
+		int WindowHeight = 1080;
 		// GameObjects e GameControl
 		std::vector<std::vector<GameObject*>> gameObjects;
 		GameControl* gameControl;
@@ -51,17 +47,13 @@ class System {
 		void ResizeWindow(int,int);
 		int Execute();
 		int Execute(bool*);
-
-	public:
+		float GetMonitor();
 		SDL_Renderer* GetRenderer();
-		static System* GetInstance();
-		static int GetWindowWidth();
-		static int GetWindowHeight();
+		int GetWindowWidth();
+		int GetWindowHeight();
 		void AddGameObject(void*);
 		void AddGameObject(void*, int);
 		void RemGameObject(void*);
-		int GetWindowWidth();
-		int GetWindowHeight();
 		void SetGameControl(GameControl*);
 };
 
