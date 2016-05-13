@@ -5,11 +5,11 @@
 #include "../GameObject.h"
 
 using namespace std;
-#pragma once 
 
 
 class Card : protected GameObject
 {
+
 private:
 	int power, lt, res;
 	int id_card;
@@ -21,4 +21,7 @@ public:
 	int is_equal(char* ct, char* type);
 	void print();
 	int GetID();
+
+
 };
+

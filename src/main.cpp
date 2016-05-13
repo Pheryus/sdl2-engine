@@ -1,33 +1,55 @@
 #undef main
+//==============================================================================
+/*
+	Run the System from here!
+*/
+//==============================================================================
 #include "System.h"
-#include <sqlite3.h>
-#include <vector>
-#include <iostream>
-#include <string.h>
-#include "GameObject.h"
-#include "CardGame/Card.h"
-#include "CardGame/Player.h"
-#include "CardGame/In_Play.h"
-#include "DataBase/DataBase.h"
+#include "GameControl.h"
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
+
 int main(int argc, char* argv[]) {
-	
-	
-	
-	if (System::GetInstance()->Init()){
-		TextureBank::LoadFolder("Textures/Cards_bd");
-		Mouse* mouse = new Mouse("leticia_cursor");
-		//GameObject* mouse_texture = new GameObject("Test");
-				//mouse_texture->SetPos(400,100);
-				//mouse->Rediment(0.5);
-				System::GetInstance()->AddGameObject((GameObject*)mouse);
-		for (int i=0; i < 6; i++){
-				GameObject* test = new GameObject(to_string(deck_cards[2*i]->GetID()));	
-				test->SetPos(149*i,300);
-				System::GetInstance()->AddGameObject(test,1);
-			}
+	// Escolhe uma carta aleatoria pra mostrar
+	/*srand(time(NULL));
+	char num[4];
+	sprintf(num,"%d",(rand()%153)+1);*/
+	// Salva a instancia do sistema
+	System* sys = System::GetInstance();
+	// Se o sistema conseguir inicializar com sucesso
+	if (sys->Init()){
+		// Carrega pasta de imagens
+		//TextureBank::LoadFolder("Textures/Cards_bd");
+		// Cria gameObjects
+		//GameObject* Mario = new GameObject("Test");
+		//GameObject* Card = new GameObject(num);
+		// add gameoObjects as rotinas render e update
+		//sys->AddGameObject(Mario);
+		//sys->AddGameObject(Card);
+		// Define Tela Cheia
+		sys->SetFullScreen();
+		GameControl* gc = new GameControl();
+		gc->Run();
+		//sys->SetGameControl(gc);
+		// Seta a posição da carta na tela
+		//Card->SetPos(600,100);
+		//Card->resize(0.5);
+		// Executa o jogo até a primeira tentativa de fechamento da janela
+		//sys->Execute();
+		// Remove a carta das rotinas de render e update, libera memoria
+		//sys->RemGameObject(Card);
+		//delete Card;
+		// Redimensiona a janela (perde Fullscreen)
+		//sys->ResizeWindow(648,480);
+		// Executa de novo até ser fechado
+		//sys->Execute();
+		// Fecha sistema e limpa tudo (do sistema)
+		sys->Quit();
+		// Não esqueça de liberar memória a qual você alocou!
+		//delete Mario;
 	}
-		System::GetInstance()->Execute();
+	return 0;
 }

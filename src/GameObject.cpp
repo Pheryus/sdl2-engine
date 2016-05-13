@@ -13,6 +13,7 @@ GameObject::GameObject(std::string ID) : ID(ID){
 	window = System::GetInstance()->GetMonitor();
 	ResizeImage(window);
 	alive = true;
+	active = true;
 }
 
 void GameObject::SetPos(int x, int y){
@@ -26,9 +27,10 @@ void GameObject::Update(){}
 void GameObject::Update(SDL_Event* Event){}
 
 void GameObject::Render(){
-	TextureBank::Get(ID)->Render(
-		dest.x, dest.y, dest.w, dest.h,
-		src.x, src.y, src.w, src.h);
+	if (active)
+		TextureBank::Get(ID)->Render(
+			dest.x, dest.y, dest.w, dest.h,
+			src.x, src.y, src.w, src.h);
 }
 
 bool GameObject::Collide(GameObject* g){
@@ -37,6 +39,10 @@ bool GameObject::Collide(GameObject* g){
 		g->GetPos().x - dest.x,
 		g->GetPos().y - dest.y
 	);
+}
+
+bool GameObject::CollidePoint(int x, int y){
+	return GetCurrentMask()->CollidePoint(x-dest.x, y-dest.y);
 }
 
 std::string GameObject::GetID(){
@@ -56,15 +62,15 @@ SDL_Point GameObject::GetPos(){
 	return p;
 }
 
-	void GameObject::ResizeCoor(float v){
+void GameObject::ResizeCoor(float v){
 		dest.x *= window;
 		dest.y *= window;
-	}
+}
 
-	void GameObject::ResizeImage(float v){
+void GameObject::ResizeImage(float v){
 	dest.w *= v;
 	dest.h *= v; 
-	}
+}
 
 void GameObject::SetCurrentSprite(int index){
 	Current = index;
@@ -73,4 +79,18 @@ void GameObject::SetCurrentSprite(int index){
 
 bool GameObject::isAlive(){
 	return alive;
-}	
+}
+
+void GameObject::setAlive(bool alive){
+	this->alive = alive;
+}
+
+bool GameObject::isActive(){
+	return active;
+}
+
+void GameObject::setActive(bool active){
+	this->active = active;
+}
+
+

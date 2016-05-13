@@ -15,11 +15,11 @@ PlayGame::PlayGame(int id_deck) : GameControl() {
 }
 
 PlayGame::update(){
-
+	
 }
 
 PlayGame::manageEvents(){
-
+	
 }
 
 PlayGame::manageCollisions(){

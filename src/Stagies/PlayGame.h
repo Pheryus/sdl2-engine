@@ -5,6 +5,7 @@
 #include "../DataBase/Database.h"
 #include "../CardGame/Card.h"
 #include <vector>
+#include <sqlite3.h>
 
 using namespace std;
 

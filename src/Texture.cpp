@@ -32,13 +32,6 @@ bool Texture::Load(SDL_Renderer* Renderer, std::string Filename) {
 	}
 	//Log("Surface Loaded");
 
-    // Convert SDL surface to a texture
-	/*SDLTexture = SDL_CreateTextureFromSurface(Renderer, TempSurface);
-	if(SDLTexture == NULL) {
-		Log("Unable to create SDL Texture : %s : %s", Filename.c_str(), IMG_GetError());
-		return false;
-	}*/
-
 	// Created to give STREAMING access to texture. This is needed to access
 	// pixels to determine its masks
 	SDLTexture = SDL_CreateTexture(Renderer, TempSurface->format->format,
@@ -51,6 +44,7 @@ bool Texture::Load(SDL_Renderer* Renderer, std::string Filename) {
 
 	void* pixels;
 	SDL_SetTextureBlendMode(SDLTexture, SDL_BLENDMODE_BLEND);
+<<<<<<< HEAD
 	//Log("BlendMode Setted");
   SDL_LockTexture(SDLTexture, &TempSurface->clip_rect, &pixels, &pitch);
   //Log("Texture Locked. Copying %x, %x, %d, %d",pixels,TempSurface->pixels, TempSurface->w,TempSurface->h);
@@ -61,13 +55,14 @@ bool Texture::Load(SDL_Renderer* Renderer, std::string Filename) {
 	SDL_UnlockTexture(SDLTexture);
 	//Log("Texture Filled");
     // Grab dimensions and pitch
+=======
+    SDL_LockTexture(SDLTexture, &TempSurface->clip_rect, &pixels, &pitch);
+	memcpy(pixels, TempSurface->pixels, TempSurface->h * TempSurface->pitch);
+	SDL_UnlockTexture(SDLTexture);
+	// Grab dimensions and pitch
+>>>>>>> upstream/master
 	Width = TempSurface->w;
 	Height = TempSurface->h;
-	pitch = TempSurface->pitch;
-
-	//SDL_QueryTexture(SDLTexture, NULL, NULL, &Width, &Height);
-	//Log("Texture Dimensions: %s : %d %d", Filename.c_str(), Width, Height);
-
 	SDL_FreeSurface(TempSurface);
 	return true;
 }
