@@ -16,7 +16,6 @@ public:
     virtual void manageEvents();
     virtual void manageCollisions();
 
-
     void Test();
 
 protected:

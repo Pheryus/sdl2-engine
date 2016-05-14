@@ -44,7 +44,7 @@ class System {
 		bool Init();					// Initialize our SDL game / System
 		void Quit();
 		void SetFullScreen();
-		void ResizeWindow(int,int);
+		void Resize(int,int);
 		int Execute();
 		int Execute(bool*);
 		float GetMonitor();

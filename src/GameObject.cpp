@@ -10,8 +10,6 @@ GameObject::GameObject(std::string ID) : ID(ID){
 	dest.y = 0;
 	dest.w = src.w;
 	dest.h = src.h;
-	window = System::GetInstance()->GetMonitor();
-	ResizeImage();
 	alive = true;
 	active = true;
 }
@@ -19,7 +17,6 @@ GameObject::GameObject(std::string ID) : ID(ID){
 void GameObject::SetPos(int x, int y){
 	dest.x = x;
 	dest.y = y;
-	ResizeCoor();
 }
 
 void GameObject::Update(){}
@@ -62,14 +59,14 @@ SDL_Point GameObject::GetPos(){
 	return p;
 }
 
-void GameObject::ResizeCoor(){
-		dest.x *= window;
-		dest.y *= window;
+void GameObject::Reposition(double v){
+		dest.x *= v;
+		dest.y *= v;
 }
 
-void GameObject::ResizeImage(){
-	dest.w *= window;
-	dest.h *= window; 
+void GameObject::Resize(double v){
+	dest.w *= v;
+	dest.h *= v; 
 }
 
 void GameObject::SetCurrentSprite(int index){

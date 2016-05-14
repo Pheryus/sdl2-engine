@@ -6,7 +6,7 @@ bin/FileManager.o bin/Stringify.o bin/Texture.o bin/bitmask.o bin/GameControl.o 
 	bin/Card.o bin/Create_Deck.o bin/In_Play.o bin/Player.o bin/DataBase.o bin/SongBank.o bin/Event.o
 OUT=bin/game
 
-all: main System GameObject TextureBank Mask FileManager Stringify Texture bitmask Card Create_Deck In_Play Player DataBase SongBank
+all: main System GameObject TextureBank Mask FileManager Stringify Texture bitmask Card Create_Deck In_Play Player DataBase SongBank Event
 			${CXX} ${OBJS} ${SDL} -o ${OUT}
 			rm bin/*.o
 

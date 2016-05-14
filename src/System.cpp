@@ -42,9 +42,9 @@ bool System::Init() {
 		Log("[ERRO] Unable to create SDL Window: %s", SDL_GetError());
 		return false;
 	}
-	SDL_SetWindowFullscreen(Window,SDL_WINDOW_FULLSCREEN);
+	//SDL_SetWindowFullscreen(Window,SDL_WINDOW_FULLSCREEN);
 
-	PrimarySurface = SDL_GetWindowSurface(Window);
+	//PrimarySurface = SDL_GetWindowSurface(Window);
 	
 	if((Renderer = SDL_CreateRenderer(Window, -1, SDL_RENDERER_ACCELERATED)) == NULL) {
 	    Log("[ERRO] Unable to create renderer");
@@ -68,16 +68,14 @@ bool System::Init() {
 	if(TextureBank::Init() == false) {
 		Log("[ERRO] Unable to init TextureBank");
 		return false;
-		monitor = (float) current.w/(float)WindowWidth;
-		//Log("[ OK ] sdl2-engine initialized.");
-		gameObjects.resize(2);
-		gameControl = NULL;
-
-		Log("[ OK ] sdl2-engine initialized.");
 	}
+	//Log("[ OK ] sdl2-engine initialized.");
+	gameObjects.resize(2);
+	gameControl = NULL;
+
+	Log("[ OK ] sdl2-engine initialized.");
 }
 	
-
 
 //------------------------------------------------------------------------------
 void System::Loop() {
@@ -132,7 +130,7 @@ void System::SetFullScreen(){
 }
 
 //------------------------------------------------------------------------------
-void System::ResizeWindow(int w, int h){
+void System::Resize(int w, int h){
 	if(SDL_GetWindowFlags(Window) & SDL_WINDOW_FULLSCREEN_DESKTOP)
 		SDL_SetWindowFullscreen(Window, 0);
 	WindowWidth = w;
