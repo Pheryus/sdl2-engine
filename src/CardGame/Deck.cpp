@@ -6,6 +6,7 @@
 using namespace std;
 
 Deck::Deck() : GameObject("pilha"){
+    max_cards = 40;
 }
 
 void Deck::AddCard(Card* c){

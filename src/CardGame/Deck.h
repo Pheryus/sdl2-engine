@@ -15,7 +15,7 @@ class Deck : protected GameObject{
 
 	protected:
 		std::stack<Card*> deck;
-		int max_cards = 40;
+		int max_cards;
 };
 
 #endif
