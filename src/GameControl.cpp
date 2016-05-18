@@ -16,6 +16,14 @@ bool GameControl::IsRunning(){
     return Running;
 }
 
+int GameControl::GetState(){
+    return state;
+}
+
+void GameControl::SetState(int state){
+    this->state = state;
+}
+
 void GameControl::Update(){
     manageEvents();
     manageCollisions();

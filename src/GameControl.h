@@ -8,7 +8,9 @@
 class GameControl{
 public:
     GameControl();
-    bool isRunning();
+    bool IsRunning();
+    int  GetState();
+    void SetState(int);
 
 public:
     virtual void Run();
