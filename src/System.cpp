@@ -202,5 +202,8 @@ void System::RemGameObject(void* go_p){
 
 void System::SetGameControl(GameControl* gc){
 	gameControl = gc;
-	//gc->setGameObjects(gameObjects);
+}
+
+GameControl* GetGameControl(){
+	return gameControl;
 }

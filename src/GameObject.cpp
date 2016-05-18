@@ -66,7 +66,7 @@ void GameObject::Reposition(double v){
 
 void GameObject::Resize(double v){
 	dest.w *= v;
-	dest.h *= v; 
+	dest.h *= v;
 }
 
 void GameObject::SetCurrentSprite(int index){
@@ -74,18 +74,35 @@ void GameObject::SetCurrentSprite(int index){
 	src = TextureBank::GetRects(ID)->at(Current);
 }
 
-bool GameObject::isAlive(){
+bool GameObject::IsAlive(){
 	return alive;
 }
 
-void GameObject::setAlive(bool alive){
+void GameObject::SetAlive(bool alive){
 	this->alive = alive;
 }
 
-bool GameObject::isActive(){
+bool GameObject::IsActive(){
 	return active;
 }
 
+void GameObject::SetActive(bool active){
+	this->active = active;
+}
 
+void GameObject::Resize(float prop){
+	dest.w *= prop;
+	dest.h *= prop;
+}
 
+void GameObject::RequestInteraction(){
+	GameControl* gc = System::GetInstance()->GetGameControl();
+	gc->RequestInteraction(this);
+}
 
+void GameObject::SendToInteraction(){
+	GameControl* gc = System::GetInstance()->GetGameControl();
+	gc->ReceiveToInteraction(this);
+}
+
+void GameObject::Interact(GameObject* other){}

@@ -8,30 +8,60 @@ GameControl::GameControl(){
     this->system = System::GetInstance();
 
     System* system = (System*)this->system;
-    system->SetGameControl(this);
-    TextureBank::LoadFolder("Textures/Cards_bd");
-    system->Resize(1366,768);
+    system->ResizeWindow(1366,768);
+    TextureBank::LoadFolder("Textures/Cards_bd"); //Heavy load Stage
 }
 
-bool GameControl::isRunning(){
+bool GameControl::IsRunning(){
     return Running;
 }
 
-void GameControl::update(){
-    manageEvents();
-    manageCollisions();
+int GameControl::GetState(){
+    return state;
 }
 
-void GameControl::manageEvents() {
+void GameControl::SetState(int state){
+    this->state = state;
+}
+
+void GameControl::Update(){
+    manageEvents();
+    manageCollisions();
+    ManageInteractions();
+}
+
+void GameControl::ManageEvents() {
     if (event->QuitRequest())
         Running = false;
 }
 
-void GameControl::manageCollisions(){}
+void GameControl::ManageCollisions(){}
+
+void GameControl::ManageInteractions(){
+  GameObject* host, interested;
+  while(!InteractFrom.empty() && !InteractTo.empty()){
+    host = InteractFrom.top();
+    interested = InteractTo.top();
+    InteractFrom.pop();
+    InteractTo.pop();
+    host->Interact(interested);
+  }
+  if (InteractFrom.empty())
+    InteractTo.clear();
+}
+
+void GameControl::RequestInteraction(GameObject* go){
+  InteractFrom.push(go);
+}
+
+void GameControl::ReceiveToInteraction(GameObject* go){
+  InteractTo.push(go);
+}
 
 void GameControl::Run(){
     System* system = (System*)this->system;
-    srand(time(NULL));
+    system->SetGameControl(this);
+    /*srand(time(NULL));
     char num[4];
     sprintf(num,"%d",(rand()%153)+1);
     GameObject* Mario = new GameObject("Test");

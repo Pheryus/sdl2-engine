@@ -9,10 +9,13 @@
 
 class GameObject{
 	protected:
-		int Current;
-		void SetCurrentSprite(int);
-		bool alive;
-		bool active;
+		int 	 	Current;
+		void 	 	SetCurrentSprite(int);
+		void 		RequestInteraction();
+		void 		SendToInteraction();
+		bool		alive;
+		bool		active;
+		SDL_Rect		src, dest;
 		std::string ID;
 
 	public:
@@ -21,19 +24,17 @@ class GameObject{
 		virtual void Update();
 		virtual void Update(SDL_Event*);
 		virtual void Render();
+		virtual void Interact(GameObject*);
 		bool Collide(GameObject*);
 		bool CollidePoint(int, int);
 		Mask* GetCurrentMask();
 		SDL_Point GetPos();
 		void SetPos(int, int);
 		std::string GetID();
-		void SetID(std::string);
-		bool isAlive();
-
-		void Resize(double);
-		void Reposition(double);
-		void setAlive(bool);
-		bool isActive();
-		void setActive(bool);
+		bool		IsAlive();
+		void 		SetAlive(bool);
+		bool		IsActive();
+		void 		SetActive(bool);
+		void 		Resize(float);
 };
 #endif

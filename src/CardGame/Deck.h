@@ -1,19 +1,20 @@
-#ifndef __STACK_H__
-	#define __STACK_H__
+#ifndef __DECK_H__
+	#define __DECK_H__
 #include "../GameObject.h"
 #include "Card.h"
 #include <stack>
 #include <string>
 
-class Stack : protected GameObject{
+class Deck : protected GameObject{
 	public:
-		Stack(std::string);
+		Deck(std::string);
 		void Update();
 		void AddCard(Card*);
 		Card* DrawCard();
-		void 
-	private:
-		std:stack<Card*> deck;
+		void Shuffle(); //Embaralha
+
+	protected:
+		std::stack<Card*> deck;
 
 };
 

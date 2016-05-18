@@ -55,6 +55,7 @@ class System {
 		void AddGameObject(void*, int);
 		void RemGameObject(void*);
 		void SetGameControl(GameControl*);
+		GameControl* GetGameControl();
 };
 
 #endif
