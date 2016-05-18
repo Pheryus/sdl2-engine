@@ -54,6 +54,7 @@ class System {
 		int GetWindowWidth();
 		int GetWindowHeight();
 		void SetGameControl(GameControl*);
+		GameControl* GetGameControl();
 };
 
 #endif

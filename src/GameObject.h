@@ -9,25 +9,28 @@ class GameObject{
 	protected:
 		int 	 	Current;
 		void 	 	SetCurrentSprite(int);
-		SDL_Rect	src, dest;
+		void 		RequestInteraction();
+		void 		SendToInteraction();
 		bool		alive;
 		bool		active;
+		SDL_Rect		src, dest;
 		std::string ID;
 
 	public:
 		GameObject(std::string);
 		virtual void Update();
 		virtual void Render();
+		virtual void Interact(GameObject*);
 		bool Collide(GameObject*);
 		bool CollidePoint(int, int);
 		Mask* 	    GetCurrentMask();
 		SDL_Point   GetPos();
 		void 		SetPos(int, int);
 		std::string GetID();
-		bool		isAlive();
-		void 		setAlive(bool);
-		bool		isActive();
-		void 		setActive(bool);
-		void 		resize(float);
+		bool		IsAlive();
+		void 		SetAlive(bool);
+		bool		IsActive();
+		void 		SetActive(bool);
+		void 		Resize(float);
 };
 #endif
