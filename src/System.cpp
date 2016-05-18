@@ -76,12 +76,12 @@ bool System::Init() {
 
 //------------------------------------------------------------------------------
 void System::Loop() {
-	gameControl->update();
+	gameControl->Update();
 	for (int i = 0; i < gameObjects.size(); i++){
 		int j = 0;
 		for (GameObject* go : gameObjects[i]){
 			go->Update();
-			if (!go->isAlive())
+			if (!go->IsAlive())
 				gameObjects[i].erase(gameObjects[i].begin()+j);
 			j++;
 		}
@@ -138,7 +138,7 @@ void System::ResizeWindow(int w, int h){
 //------------------------------------------------------------------------------
 int System::Execute() {
 
-	while(gameControl->isRunning()) {
+	while(gameControl->IsRunning()) {
 		SeekEvents();
 		Loop();
 		Render();
@@ -197,6 +197,6 @@ void System::SetGameControl(GameControl* gc){
 	gameControl = gc;
 }
 
-GameControl* GetGameControl(){
+GameControl* System::GetGameControl(){
 	return gameControl;
 }

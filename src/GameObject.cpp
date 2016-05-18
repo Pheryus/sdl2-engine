@@ -2,6 +2,7 @@
 #include "FileManager.h"
 #include "Stringify.h"
 #include "TextureBank.h"
+#include "System.h"
 
 GameObject::GameObject(std::string ID) : ID(ID){
 	SetCurrentSprite(0);
