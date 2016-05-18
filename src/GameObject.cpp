@@ -21,8 +21,6 @@ void GameObject::SetPos(int x, int y){
 
 void GameObject::Update(){}
 
-void GameObject::Update(SDL_Event* Event){}
-
 void GameObject::Render(){
 	if (active)
 		TextureBank::Get(ID)->Render(
@@ -46,10 +44,6 @@ std::string GameObject::GetID(){
 	return ID;
 }
 
-void GameObject::SetID(std::string id){
-	ID = id;
-}
-
 Mask* GameObject::GetCurrentMask(){
 	return TextureBank::GetMasks(ID)->at(Current);
 }
@@ -57,16 +51,6 @@ Mask* GameObject::GetCurrentMask(){
 SDL_Point GameObject::GetPos(){
 	SDL_Point p = {dest.x, dest.y};
 	return p;
-}
-
-void GameObject::Reposition(double v){
-		dest.x *= v;
-		dest.y *= v;
-}
-
-void GameObject::Resize(double v){
-	dest.w *= v;
-	dest.h *= v;
 }
 
 void GameObject::SetCurrentSprite(int index){

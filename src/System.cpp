@@ -45,20 +45,20 @@ bool System::Init() {
 	//SDL_SetWindowFullscreen(Window,SDL_WINDOW_FULLSCREEN);
 
 	//PrimarySurface = SDL_GetWindowSurface(Window);
-	
+
 	if((Renderer = SDL_CreateRenderer(Window, -1, SDL_RENDERER_ACCELERATED)) == NULL) {
 	    Log("[ERRO] Unable to create renderer");
 	    return false;
 	}
 
 	SDL_SetRenderDrawColor(Renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-		
+
 	SDL_DisplayMode current;
 	if (SDL_GetCurrentDisplayMode(0, &current) != 0){
 		  SDL_Log("Could not get display mode for video display #%d: %s", 0, SDL_GetError());
 		  return false;
 	}
-	
+
 	// Initialize image loading for PNGs
 	if(!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
 		Log("[ERRO] Unable to init SDL_image: %s", IMG_GetError());
@@ -75,16 +75,16 @@ bool System::Init() {
 
 	Log("[ OK ] sdl2-engine initialized.");
 }
-	
+
 
 //------------------------------------------------------------------------------
 void System::Loop() {
-	gameControl->update();
+	gameControl->Update();
 	for (int i = 0; i < gameObjects.size(); i++){
 		int j = 0;
 		for (GameObject* go : gameObjects[i]){
 			go->Update();
-			if (!go->isAlive())
+			if (!go->IsAlive())
 				gameObjects[i].erase(gameObjects[i].begin()+j);
 			j++;
 		}
@@ -141,7 +141,7 @@ void System::Resize(int w, int h){
 //------------------------------------------------------------------------------
 int System::Execute() {
 
-	while(gameControl->isRunning()) {
+	while(gameControl->IsRunning()) {
 		SeekEvents();
 		Loop();
 		Render();
@@ -204,6 +204,6 @@ void System::SetGameControl(GameControl* gc){
 	gameControl = gc;
 }
 
-GameControl* GetGameControl(){
+GameControl* System::GetGameControl(){
 	return gameControl;
 }

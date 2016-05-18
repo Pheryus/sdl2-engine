@@ -8,7 +8,7 @@ GameControl::GameControl(){
     this->system = System::GetInstance();
 
     System* system = (System*)this->system;
-    system->ResizeWindow(1366,768);
+    system->Resize(1366,768);
     TextureBank::LoadFolder("Textures/Cards_bd"); //Heavy load Stage
 }
 
@@ -25,8 +25,8 @@ void GameControl::SetState(int state){
 }
 
 void GameControl::Update(){
-    manageEvents();
-    manageCollisions();
+    ManageEvents();
+    ManageCollisions();
     ManageInteractions();
 }
 
@@ -38,7 +38,7 @@ void GameControl::ManageEvents() {
 void GameControl::ManageCollisions(){}
 
 void GameControl::ManageInteractions(){
-  GameObject* host, interested;
+  GameObject *host, *interested;
   while(!InteractFrom.empty() && !InteractTo.empty()){
     host = InteractFrom.top();
     interested = InteractTo.top();
@@ -47,7 +47,8 @@ void GameControl::ManageInteractions(){
     host->Interact(interested);
   }
   if (InteractFrom.empty())
-    InteractTo.clear();
+    while(!InteractTo.empty())
+        InteractTo.pop();
 }
 
 void GameControl::RequestInteraction(GameObject* go){
@@ -69,8 +70,8 @@ void GameControl::Run(){
     system->AddGameObject(Mario);
     system->AddGameObject(Card);
     Card->SetPos(600,100);
-    Card->Resize(0.5);
+    Card->Resize(0.5);*/
     system->Execute();
-    delete Mario;
-    delete Card;
+    //delete Mario;
+    //delete Card;
 }

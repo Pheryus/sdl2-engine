@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
-#include "../CardGame/Player.h"
+#include "../CardGame/Card.h"
 
 class DataBase{
 	public:
