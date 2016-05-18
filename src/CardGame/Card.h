@@ -10,7 +10,7 @@
 using namespace std;
 
 
-class Card : protected GameObject
+class Card : public GameObject
 {
 
 private:
@@ -23,7 +23,7 @@ public:
 	Card(char** values);
 	int is_equal(char* ct, char* type);
 	void print();
-	int GetID();
+	int GetNumID();
 
 
 };

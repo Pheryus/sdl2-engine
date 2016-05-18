@@ -50,7 +50,7 @@ bitmask:
 Card:
 	${CXX} ${CFLAGS} -c src/CardGame/Card.cpp -o bin/Card.o
 
-DataBase:
+DataBase: Card
 	${CXX} ${CFLAGS} -c src/DataBase/DataBase.cpp -o bin/DataBase.o
 
 

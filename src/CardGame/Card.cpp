@@ -13,7 +13,7 @@ Card::Card(char** argv) : GameObject(argv[0]) {
 		desc = argv[9] ? argv[9] : "";
 }
 
-int Card::GetID(){
+int Card::GetNumID(){
 	return id_card;
 }
 

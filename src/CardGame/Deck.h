@@ -7,7 +7,7 @@
 
 class Deck : protected GameObject{
 	public:
-		Deck(std::string);
+		Deck();
 		void Update();
 		void AddCard(Card*);
 		Card* DrawCard();
@@ -15,7 +15,7 @@ class Deck : protected GameObject{
 
 	protected:
 		std::stack<Card*> deck;
-
+		int max_cards = 40;
 };
 
 #endif
